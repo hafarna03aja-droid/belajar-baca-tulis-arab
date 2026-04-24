@@ -168,40 +168,40 @@ export default function HomePage() {
       {/* Curriculum Preview */}
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-           <div className="flex flex-col md:flex-row gap-16 items-center">
-              <div className="flex-1">
-                <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">Langkah Pasti,<br/>Bukan Acak.</h2>
-                <p className="text-[#94A3B8] text-lg leading-relaxed mb-10">Kami tidak melempar semua informasi di hari pertama. Anda harus menaklukkan huruf tunggal sebelum menyentuh huruf bersambung.</p>
-                
-                <div className="flex flex-col gap-6">
-                  {CURRICULUM.map((item, i) => (
-                    <div key={i} className="flex gap-5 items-start">
-                      <div className="w-12 h-12 rounded-2xl bg-[#F59E0B]/10 text-[#F59E0B] flex items-center justify-center font-bold text-lg flex-shrink-0">
-                        0{item.level}
-                      </div>
-                      <div>
-                        <h4 className="text-xl font-bold text-white mb-1">{item.title}</h4>
-                        <p className="text-[#94A3B8]">{item.desc}</p>
-                      </div>
+          <div className="flex flex-col md:flex-row gap-16 items-center">
+            <div className="flex-1">
+              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6">Langkah Pasti,<br />Bukan Acak.</h2>
+              <p className="text-[#94A3B8] text-lg leading-relaxed mb-10">Kami tidak melempar semua informasi di hari pertama. Anda harus menaklukkan huruf tunggal sebelum menyentuh huruf bersambung.</p>
+
+              <div className="flex flex-col gap-6">
+                {CURRICULUM.map((item, i) => (
+                  <div key={i} className="flex gap-5 items-start">
+                    <div className="w-12 h-12 rounded-2xl bg-[#F59E0B]/10 text-[#F59E0B] flex items-center justify-center font-bold text-lg flex-shrink-0">
+                      0{item.level}
                     </div>
-                  ))}
-                </div>
-
-                <Link href="/learn" className="btn-primary inline-flex mt-12 px-8 py-4 items-center gap-2 text-lg">
-                  Lihat Roadmap Penuh →
-                </Link>
+                    <div>
+                      <h4 className="text-xl font-bold text-white mb-1">{item.title}</h4>
+                      <p className="text-[#94A3B8]">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <div className="flex-1 relative">
-                 <div className="absolute inset-0 bg-gradient-to-tr from-[#3B82F6]/20 to-[#1E3A8A]/20 blur-3xl -z-10 rounded-full" />
-                 <div className="bento-card p-10 text-center relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-6 text-8xl font-arabic opacity-5 text-[#3B82F6] -rotate-12">ص</div>
-                    <div className="font-arabic text-9xl text-[#3B82F6] mb-8 relative z-10 leading-none py-6">ب</div>
-                    <div className="text-sm font-bold tracking-widest text-[#3B82F6] mb-2 uppercase">Pratinjau Level 1</div>
-                    <div className="text-2xl font-bold text-white">Kanvas Menulis</div>
-                 </div>
+              <Link href="/learn" className="btn-primary inline-flex mt-12 px-8 py-4 items-center gap-2 text-lg">
+                Lihat Roadmap Penuh →
+              </Link>
+            </div>
+
+            <div className="flex-1 relative">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#3B82F6]/20 to-[#1E3A8A]/20 blur-3xl -z-10 rounded-full" />
+              <div className="bento-card p-10 text-center relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-6 text-8xl font-arabic opacity-5 text-[#3B82F6] -rotate-12">ص</div>
+                <div className="font-arabic text-9xl text-[#3B82F6] mb-8 relative z-10 leading-none py-6">ب</div>
+                <div className="text-sm font-bold tracking-widest text-[#3B82F6] mb-2 uppercase">Pratinjau Level 1</div>
+                <div className="text-2xl font-bold text-white">Kanvas Menulis</div>
               </div>
-           </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -240,7 +240,7 @@ export default function HomePage() {
             <div className="font-bold text-white tracking-tight">Qur&apos;an Flow</div>
           </div>
           <div className="text-sm font-medium text-[#94A3B8]">
-            © {new Date().getFullYear()} Dirakit dengan hati untuk kemudahan membaca Qur&apos;an.
+            © {new Date().getFullYear()}  Dibuat oleh 24 Learning Centre untuk kemudahan membaca Qur&apos;an.
           </div>
         </div>
       </footer>
