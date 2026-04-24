@@ -93,30 +93,36 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 glass-panel border-t-0 m-4 rounded-3xl p-4 flex flex-col gap-2 shadow-2xl animate-fade-in origin-top">
+        <div className="md:hidden absolute top-[calc(100%+0.5rem)] left-4 right-4 sm:left-auto sm:right-6 sm:w-[320px] bg-[#0F172A]/98 backdrop-blur-2xl border border-white/10 rounded-3xl p-2.5 flex flex-col gap-1 shadow-[0_30px_60px_rgba(0,0,0,0.6)] animate-fade-in origin-top max-h-[calc(100vh-6rem)] overflow-y-auto ring-1 ring-white/5">
+          {/* Subtle top highlight */}
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-5 py-3.5 text-[15px] font-semibold text-white hover:bg-[#1E293B] rounded-2xl transition-colors"
+              className="px-4 py-3.5 text-sm font-semibold text-white/90 hover:text-white hover:bg-white/5 active:bg-white/10 rounded-2xl transition-all flex items-center justify-between group"
               onClick={() => setMenuOpen(false)}
             >
-              {link.label}
+              <span>{link.label}</span>
+              <span className="text-white/20 group-hover:text-white/50 group-hover:translate-x-1 transition-all">→</span>
             </Link>
           ))}
           {userName ? (
-            <div className="flex flex-col gap-2 mt-2 pt-2 border-t border-white/10">
-              <div className="px-5 py-2 text-[15px] font-semibold text-white/70">
-                Halo, {userName}
+            <div className="flex flex-col gap-2 mt-1.5 pt-2.5 border-t border-white/10">
+              <div className="px-4 py-1.5 text-[13px] font-medium text-[#94A3B8] flex items-center gap-3">
+                 <div className="w-7 h-7 rounded-full bg-[#1E293B] border border-white/10 flex items-center justify-center text-white font-bold text-xs shadow-inner flex-shrink-0">
+                    {userName.charAt(0).toUpperCase()}
+                 </div>
+                 <span className="truncate leading-tight">Halo, <span className="font-semibold text-white">{userName}</span></span>
               </div>
               <button
                 onClick={() => {
                   handleLogout()
                   setMenuOpen(false)
                 }}
-                className="px-5 py-3.5 text-[15px] font-bold text-red-400 bg-red-500/10 hover:bg-red-500/20 text-center rounded-2xl transition-colors"
+                className="w-full mt-1 px-4 py-3 text-sm font-bold text-red-400 bg-red-500/5 hover:bg-red-500/15 border border-red-500/10 hover:border-red-500/30 text-center rounded-xl transition-all flex items-center justify-center gap-2"
               >
                 Keluar
               </button>
@@ -124,7 +130,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/auth/login"
-              className="btn-primary px-5 py-4 text-[15px] text-center mt-2 rounded-2xl"
+              className="btn-primary w-full px-4 py-3.5 text-sm text-center mt-1.5 rounded-xl font-bold shadow-lg shadow-[#3B82F6]/20"
               onClick={() => setMenuOpen(false)}
             >
               Masuk ke Akun
