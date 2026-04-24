@@ -240,7 +240,7 @@ export default function HomePage() {
             <div className="font-bold text-white tracking-tight">Qur&apos;an Flow</div>
           </div>
           <div className="text-sm font-medium text-[#94A3B8]">
-            © {new Date().getFullYear()}  Dibuat oleh 24 Learning Centre untuk kemudahan membaca Qur&apos;an.
+            © {new Date().getFullYear()} Dibuat oleh 24 Learning Centre untuk kemudahan membaca Qur&apos;an.
           </div>
         </div>
       </footer>
