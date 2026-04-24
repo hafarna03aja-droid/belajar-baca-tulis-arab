@@ -33,13 +33,13 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-[var(--color-bg)]">
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-6 pt-32 pb-24">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-24 sm:pt-32 pb-24">
         {/* Header */}
-        <div className="mb-12 animate-fade-in">
-          <h1 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+        <div className="mb-10 sm:mb-12 animate-fade-in text-center md:text-left mt-2 sm:mt-0">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight">
             <span className="text-gradient-vibrant">Ruang Kendali</span> {userName ? userName.split(' ')[0] : 'Anda'}
           </h1>
-          <p className="text-lg text-[#CBD5E1] font-medium">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
+          <p className="text-base sm:text-lg text-[#CBD5E1] font-medium px-4 md:px-0">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
         </div>
 
         {/* Stats Row - Bento Style */}

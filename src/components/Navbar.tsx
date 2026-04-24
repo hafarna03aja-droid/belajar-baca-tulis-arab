@@ -35,10 +35,10 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 will-change-transform ${
-        scrolled ? 'py-4 glass-premium border-b border-white/10 shadow-lg shadow-black/40' : 'py-6 bg-transparent'
+        scrolled ? 'py-3 sm:py-4 glass-premium border-b border-white/10 shadow-lg shadow-black/40' : 'py-4 sm:py-6 bg-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1E3A8A] flex items-center justify-center shadow-lg shadow-[#2563EB]/20 group-hover:scale-105 transition-transform duration-300">
