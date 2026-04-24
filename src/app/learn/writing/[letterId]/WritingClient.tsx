@@ -12,6 +12,7 @@ interface Point {
   y: number
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function calcAccuracy(userCanvas: HTMLCanvasElement, letter: any): number {
   if (!letter || !letter.guidePath) return 0
   const w = userCanvas.width

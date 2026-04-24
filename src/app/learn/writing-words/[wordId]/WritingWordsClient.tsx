@@ -141,6 +141,7 @@ export default function WritingWordsClient({
     redrawCanvas()
   }, [redrawCanvas])
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getPos = (e: any, canvas: HTMLCanvasElement): Point => {
     const rect = canvas.getBoundingClientRect()
     const scaleX = canvas.width / rect.width
@@ -152,6 +153,7 @@ export default function WritingWordsClient({
     return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const startDrawing = (e: any) => {
     e.preventDefault()
     const canvas = canvasRef.current
@@ -162,6 +164,7 @@ export default function WritingWordsClient({
     setCurrentPath([pos])
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const draw = (e: any) => {
     e.preventDefault()
     if (!isDrawing) return
@@ -171,6 +174,7 @@ export default function WritingWordsClient({
     setCurrentPath((prev) => [...prev, pos])
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const stopDrawing = (e: any) => {
     e.preventDefault()
     if (!isDrawing) return
@@ -247,7 +251,7 @@ export default function WritingWordsClient({
               </div>
               <div className="font-arabic text-8xl text-[#10B981] mb-4 leading-none py-4">{wordData?.word || ''}</div>
               <h1 className="text-2xl font-extrabold text-white tracking-tight uppercase">/{wordData?.transliteration}/</h1>
-              <p className="text-[#94A3B8] font-bold mt-2">"{wordData?.meaning}"</p>
+              <p className="text-[#94A3B8] font-bold mt-2">&quot;{wordData?.meaning}&quot;</p>
               {isCompleted && (
                 <div className="mt-6 inline-flex items-center gap-2 bg-[#10B981]/10 text-[#10B981] text-[11px] uppercase tracking-wider font-extrabold px-4 py-2 rounded-full border border-[#10B981]/20">
                   <span className="text-base">✓</span> Kompetensi Tercapai

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { IQRO_DATA } from '@/lib/iqro-data'
 import { useLearningStore } from '@/store/learningStore'
@@ -11,7 +11,7 @@ export default function IqroModePage() {
   const [currentPageIndex, setCurrentPageIndex] = useState(0)
   const [showTransliteration, setShowTransliteration] = useState(false)
   const { completeLesson } = useLearningStore()
-  const audioRef = useRef<HTMLAudioElement | null>(null)
+
 
   const currentJilid = IQRO_DATA[currentJilidIndex]
   const currentPage = currentJilid.pages[currentPageIndex]
@@ -21,6 +21,7 @@ export default function IqroModePage() {
     const saved = localStorage.getItem('quran-flow-iqro-v2-progress')
     if (saved) {
       const { jilid, page } = JSON.parse(saved)
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCurrentJilidIndex(jilid)
       setCurrentPageIndex(page)
     }
@@ -33,15 +34,7 @@ export default function IqroModePage() {
     }))
   }, [currentJilidIndex, currentPageIndex])
 
-  const playCustomAudio = (url: string) => {
-    if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
-    }
-    const audio = new Audio(url)
-    audioRef.current = audio
-    audio.play().catch(e => console.error("Gagal putar audio custom", e))
-  }
+
 
   const handleNext = () => {
     completeLesson(`iqro-p-${currentPage.id}`, 100)
@@ -82,7 +75,7 @@ export default function IqroModePage() {
           </h1>
           <div className="bg-[#F59E0B]/10 border border-[#F59E0B]/30 rounded-2xl px-6 py-3 inline-block">
              <p className="text-[#F59E0B] text-sm font-bold italic">
-               "{currentPage.instruction}"
+               &quot;{currentPage.instruction}&quot;
              </p>
           </div>
         </div>

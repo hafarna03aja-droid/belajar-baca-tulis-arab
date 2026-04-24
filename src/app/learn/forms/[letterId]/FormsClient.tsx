@@ -59,7 +59,14 @@ export default function FormsClient({
     setScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }))
   }
 
-  const quizChoices = ['Tunggal', 'Awal', 'Tengah', 'Akhir'].sort(() => Math.random() - 0.5)
+  const [quizChoices, setQuizChoices] = useState<string[]>([])
+
+  useEffect(() => {
+    if (quizMode) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setQuizChoices(['Tunggal', 'Awal', 'Tengah', 'Akhir'].sort(() => Math.random() - 0.5))
+    }
+  }, [quizMode, activeForm])
 
   if (!letter && letterId) {
     return (

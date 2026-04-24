@@ -4,7 +4,7 @@ import * as fs from 'fs';
 
 const hijaiyahIds = HIJAIYAH_LETTERS.map(l => l.id);
 
-let iqroWords: string[] = [];
+const iqroWords: string[] = [];
 IQRO_DATA.forEach(jilid => {
   if (jilid.id < 7) {
     jilid.pages.forEach(page => {

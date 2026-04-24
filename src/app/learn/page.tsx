@@ -17,10 +17,12 @@ function getLevelHref(path: string, lessonId: string, levelId: number) {
 
 export default function LearnPage() {
   const { completedLessons, currentLevel, forceUnlockAll } = useLearningStore()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [randomPicks, setRandomPicks] = useState<Record<number, any>>({})
 
   useEffect(() => {
     const pickRandoms = () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const picks: Record<number, any> = {}
       CURRICULUM_LEVELS.forEach(level => {
         const dataset = level.id >= 5 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
@@ -191,7 +193,7 @@ export default function LearnPage() {
                                     }`}
                                   title={'name' in lesson ? lesson.name : lesson.transliteration}
                                 >
-                                  {/* @ts-ignore */}
+                                  {/* @ts-expect-error ignore dynamic typing */}
                                   {lesson.letter || lesson.word}
                                 </Link>
                               )
@@ -219,7 +221,7 @@ export default function LearnPage() {
             <div className="mesh-bg rounded-2xl md:rounded-3xl p-6 md:p-8 text-white relative overflow-hidden bento-card border-none shadow-xl">
               <div className="absolute top-0 right-0 p-4 text-[6rem] md:text-9xl font-arabic text-white/5 pointer-events-none -rotate-12">م</div>
               <div className="relative z-10">
-                <h3 className="font-extrabold text-2xl mb-2">Graduasi Al-Qur'an 🎓</h3>
+                <h3 className="font-extrabold text-2xl mb-2">Graduasi Al-Qur&apos;an 🎓</h3>
                 <p className="text-white/80 font-medium leading-relaxed max-w-md">
                   Puncak dari disiplin Anda. Selesaikan semua rute untuk mendekode kehebatan bahasa suci dan klaim Medali Kehormatan Anda.
                 </p>

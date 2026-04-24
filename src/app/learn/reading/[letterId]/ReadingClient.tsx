@@ -25,7 +25,7 @@ export default function ReadingClient({
   const [letterId, setLetterId] = useState<string>('')
   const [activeHarakat, setActiveHarakat] = useState(0)
   const [isFlipped, setIsFlipped] = useState(false)
-  const [revealed, setRevealed] = useState(false)
+
   const [quizMode, setQuizMode] = useState(false)
   const [quizAnswer, setQuizAnswer] = useState<string | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -80,7 +80,7 @@ export default function ReadingClient({
     if (!letter) return
     setActiveHarakat(index)
     setIsFlipped(false)
-    setRevealed(false)
+
     setQuizAnswer(null)
     setIsPlaying(true)
     
@@ -113,7 +113,7 @@ export default function ReadingClient({
   }
 
   const handleReveal = () => {
-    setRevealed(true)
+
     handlePlay()
     if (letter) {
       completeLesson(`${level}-${letter.id}`, 100)
@@ -127,8 +127,14 @@ export default function ReadingClient({
     setScore((s) => ({ correct: s.correct + (isCorrect ? 1 : 0), total: s.total + 1 }))
   }
 
-  const quizChoices = ['Fathah', 'Kasrah', 'Dhammah', 'Sukun']
-    .sort(() => Math.random() - 0.5)
+  const [quizChoices, setQuizChoices] = useState<string[]>([])
+
+  useEffect(() => {
+    if (quizMode) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setQuizChoices(['Fathah', 'Kasrah', 'Dhammah', 'Sukun'].sort(() => Math.random() - 0.5))
+    }
+  }, [quizMode, activeHarakat])
 
   if (!letter && letterId) {
     return (
@@ -187,7 +193,7 @@ export default function ReadingClient({
               {harakatOptions.map((h, i) => (
                 <button
                   key={h.id}
-                  onClick={() => { setActiveHarakat(i); setIsFlipped(false); setRevealed(false); setQuizAnswer(null) }}
+                  onClick={() => { setActiveHarakat(i); setIsFlipped(false); setQuizAnswer(null) }}
                   className={`flex flex-col items-center py-3 sm:py-4 rounded-2xl transition-all border ${activeHarakat === i ? 'bg-[#064E3B] border-[#064E3B] text-white shadow-lg shadow-[#064E3B]/30 scale-[1.02]' : 'bg-[#F8FAF9] border-[#E2E8F0] text-[#64748B] hover:border-[#94A3B8] hover:bg-white'}`}
                 >
                   <div className={`font-arabic text-2xl sm:text-3xl leading-none mb-1 sm:mb-2 ${activeHarakat === i ? 'text-[#D97706]' : 'text-[#064E3B]'}`}>{h.symbol}</div>

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '@/components/Navbar'
 
 const FLOATING_LETTERS = ['ا', 'ب', 'ت', 'ح', 'د', 'ر', 'س', 'ع', 'ف', 'ق', 'ل', 'م', 'ن', 'و', 'ي']
@@ -50,6 +50,7 @@ export default function HomePage() {
       delay: Math.random() * 4,
       size: Math.random() * 1.5 + 1.2,
     }))
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setRandomLetters(letters)
   }, [])
 
@@ -93,7 +94,7 @@ export default function HomePage() {
                 <path d="M2 10 Q 75 2 150 8 Q 225 14 298 6" stroke="#F59E0B" strokeWidth="4" strokeLinecap="round" className="animate-draw" />
               </svg>
             </span>
-            <br />Al-Qur'an dari Nol.
+            <br />Al-Qur&apos;an dari Nol.
           </h1>
 
           <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed font-medium">
@@ -236,10 +237,10 @@ export default function HomePage() {
             <div className="w-8 h-8 rounded-xl bg-[#F59E0B] flex items-center justify-center">
               <span className="font-arabic text-[#020617] text-sm font-bold">ق</span>
             </div>
-            <div className="font-bold text-white tracking-tight">Qur'an Flow</div>
+            <div className="font-bold text-white tracking-tight">Qur&apos;an Flow</div>
           </div>
           <div className="text-sm font-medium text-[#94A3B8]">
-            © {new Date().getFullYear()} Dirakit dengan hati untuk kemudahan membaca Qur'an.
+            © {new Date().getFullYear()} Dirakit dengan hati untuk kemudahan membaca Qur&apos;an.
           </div>
         </div>
       </footer>

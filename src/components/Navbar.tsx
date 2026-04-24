@@ -45,7 +45,7 @@ export default function Navbar() {
             <span className="text-white font-arabic text-xl font-bold translate-y-[-1px]">ق</span>
           </div>
           <div>
-            <span className="text-xl font-extrabold text-white tracking-tight">Qur'an Flow</span>
+            <span className="text-xl font-extrabold text-white tracking-tight">Qur&apos;an Flow</span>
             <p className="text-[10px] text-[#3B82F6] uppercase tracking-wider font-bold opacity-80 -mt-0.5">Platform Edukasi</p>
           </div>
         </Link>

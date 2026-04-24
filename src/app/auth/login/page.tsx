@@ -72,7 +72,7 @@ export default function LoginPage() {
 
         <div className="relative z-10 text-white animate-fade-in flex flex-col items-center">
           <div className="font-arabic text-8xl mb-8 animate-float text-[#D97706]/90 drop-shadow-[0_0_30px_rgba(217,119,6,0.5)]">بسم الله</div>
-          <h2 className="text-4xl font-extrabold mb-5 tracking-tight">Qur'an Flow</h2>
+          <h2 className="text-4xl font-extrabold mb-5 tracking-tight">Qur&apos;an Flow</h2>
           <p className="text-white/70 max-w-sm leading-relaxed text-lg font-medium">
             Platform edukasi paling mewah untuk menguasai baca tulis Hijaiyah secara presisi.
           </p>

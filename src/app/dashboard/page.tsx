@@ -85,7 +85,7 @@ export default function DashboardPage() {
               <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-[#94A3B8]">
                 <span>Mulai (Alif)</span>
                 <span className="text-[#064E3B]">{overallProgress}% Selesai</span>
-                <span>Tamat (Ya')</span>
+                <span>Tamat (Ya&apos;)</span>
               </div>
             </div>
 
