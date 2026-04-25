@@ -242,6 +242,10 @@ export default function HomePage() {
           <div className="text-xs sm:text-sm font-medium text-[#94A3B8]">
             © {new Date().getFullYear()}{" "}Dibuat oleh 24 Learning Centre untuk kemudahan membaca Qur&apos;an.
           </div>
+          <div className="flex gap-4 text-xs text-[#94A3B8]">
+            <Link href="/terms" className="hover:text-[#F59E0B] transition-colors">Syarat &amp; Ketentuan</Link>
+            <Link href="/validation" className="hover:text-[#F59E0B] transition-colors">Validasi Ulama</Link>
+          </div>
         </div>
       </footer>
     </div>
