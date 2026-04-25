@@ -9,6 +9,7 @@ import { useLearningStore } from '@/store/learningStore'
 const NAV_LINKS = [
   { href: '/learn', label: 'Mulai Belajar' },
   { href: '/dashboard', label: 'Dashboard' },
+  { href: '/contact', label: 'Hubungi Kami' },
 ]
 
 export default function Navbar() {
