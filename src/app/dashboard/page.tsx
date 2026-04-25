@@ -33,17 +33,17 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-[var(--color-bg)]">
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-24 sm:pt-32 pb-24">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-24">
         {/* Header */}
-        <div className="mb-10 sm:mb-12 animate-fade-in text-center md:text-left mt-2 sm:mt-0">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight">
-            <span className="text-gradient-vibrant">Ruang Kendali</span> {userName ? userName.split(' ')[0] : 'Anda'}
+        <div className="mb-8 sm:mb-12 animate-fade-in text-center md:text-left mt-2 sm:mt-0">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight break-words">
+            <span className="text-gradient-vibrant block sm:inline">Ruang Kendali</span> <span className="inline-block">{userName ? userName.split(' ')[0] : 'Anda'}</span>
           </h1>
-          <p className="text-base sm:text-lg text-[#CBD5E1] font-medium px-4 md:px-0">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
+          <p className="text-sm sm:text-lg text-[#CBD5E1] font-medium px-2 md:px-0">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
         </div>
 
         {/* Stats Row - Bento Style */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5 mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           {/* Stats Cards */}
           {[
             { label: 'Konsistensi', value: streakDays, unit: 'hari', icon: '🔥', color: '#FDE68A', glow: 'glow-gold' },
@@ -51,14 +51,14 @@ export default function DashboardPage() {
             { label: 'Pelajaran', value: completedCount, unit: `/ ${totalLessons}`, icon: '🎯', color: '#D97706', glow: 'glow-gold' },
             { label: 'Level Saya', value: currentLevel, unit: '/ 6 level', icon: '🎖️', color: '#B45309', glow: 'glow-gold' },
           ].map((stat) => (
-            <div key={stat.label} className={`glass-premium p-6 flex flex-col justify-between rounded-3xl transition-all hover:scale-[1.05] hover:z-10 ${stat.glow}`}>
-              <div className="text-3xl mb-4">{stat.icon}</div>
+            <div key={stat.label} className={`glass-premium p-4 sm:p-6 flex flex-col justify-between rounded-2xl sm:rounded-3xl transition-all hover:scale-[1.05] hover:z-10 ${stat.glow}`}>
+              <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{stat.icon}</div>
               <div>
-                <div className="flex items-baseline gap-1.5 mb-1">
-                  <div className="text-4xl font-extrabold text-white tracking-tighter">{stat.value}</div>
-                  <div className="text-sm font-semibold text-white/50">{stat.unit}</div>
+                <div className="flex items-baseline gap-1 sm:gap-1.5 mb-1">
+                  <div className="text-2xl sm:text-4xl font-extrabold text-white tracking-tighter truncate">{stat.value}</div>
+                  <div className="text-xs sm:text-sm font-semibold text-white/50 flex-shrink-0">{stat.unit}</div>
                 </div>
-                <div className="text-[11px] font-bold tracking-widest uppercase" style={{ color: stat.color }}>
+                <div className="text-[10px] sm:text-[11px] font-bold tracking-widest uppercase truncate" style={{ color: stat.color }}>
                   {stat.label}
                 </div>
               </div>
@@ -71,10 +71,10 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 flex flex-col gap-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             
             {/* Overall Progress Block */}
-            <div className="bento-card p-8 bg-white relative overflow-hidden">
+            <div className="bento-card p-6 sm:p-8 bg-white relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 font-arabic text-8xl text-black/[0.02] pointer-events-none">ي</div>
-              <h2 className="text-xl font-bold text-[#0F172A] mb-2 tracking-tight">Akuisisi Pengetahuan</h2>
-              <p className="text-sm font-medium text-[#64748B] mb-6">Misi Penguasaan Hijaiyah: {completedCount} dari {totalLessons}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-[#0F172A] mb-2 tracking-tight">Akuisisi Pengetahuan</h2>
+              <p className="text-xs sm:text-sm font-medium text-[#64748B] mb-6">Misi Penguasaan Hijaiyah: {completedCount} dari {totalLessons}</p>
               
               <div className="w-full bg-[#F1F5F9] rounded-full h-4 mb-3 shadow-inner">
                 <div
@@ -90,22 +90,22 @@ export default function DashboardPage() {
             </div>
 
             {/* Streak Graph */}
-            <div className="bento-card p-8">
-              <div className="flex justify-between items-start mb-8">
+            <div className="bento-card p-6 sm:p-8">
+              <div className="flex justify-between items-start mb-6 sm:mb-8">
                 <div>
-                  <h2 className="text-xl font-bold text-white mb-1 tracking-tight">Intensitas Mingguan</h2>
-                  <p className="text-sm font-medium text-[#94A3B8]">Keberhasilan ditentukan oleh kehadiran.</p>
+                  <h2 className="text-lg sm:text-xl font-bold text-white mb-1 tracking-tight">Intensitas Mingguan</h2>
+                  <p className="text-xs sm:text-sm font-medium text-[#94A3B8]">Keberhasilan ditentukan oleh kehadiran.</p>
                 </div>
-                <div className="bg-[#D97706]/10 text-[#D97706] font-bold px-4 py-2 rounded-full text-sm flex items-center gap-2">
-                  <span className="text-lg">🔥</span> {streakDays} Hari
+                <div className="bg-[#D97706]/10 text-[#D97706] font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2">
+                  <span className="text-base sm:text-lg">🔥</span> {streakDays} Hari
                 </div>
               </div>
 
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-1.5 sm:gap-2">
                 {weekDays.map((day, i) => (
-                  <div key={i} className="flex flex-col items-center gap-3 w-full">
+                  <div key={i} className="flex flex-col items-center gap-2 sm:gap-3 w-full">
                     <div
-                      className={`w-full aspect-square max-w-[3.5rem] rounded-2xl flex items-center justify-center text-lg font-bold transition-all duration-300 ${
+                      className={`w-full aspect-square max-w-[2.5rem] sm:max-w-[3.5rem] rounded-xl sm:rounded-2xl flex items-center justify-center text-sm sm:text-lg font-bold transition-all duration-300 ${
                         day.active
                           ? 'bg-[#064E3B] text-white shadow-[0_8px_20px_rgba(6,78,59,0.3)]'
                           : 'bg-[#F1F5F9] text-[#94A3B8] border border-[#E2E8F0]'
@@ -113,7 +113,7 @@ export default function DashboardPage() {
                     >
                       {day.date}
                     </div>
-                    <span className={`text-[11px] font-bold uppercase tracking-widest ${day.active ? 'text-[#064E3B]' : 'text-[#94A3B8]'}`}>
+                    <span className={`text-[9px] sm:text-[11px] font-bold uppercase tracking-widest ${day.active ? 'text-[#064E3B]' : 'text-[#94A3B8]'}`}>
                       {day.label}
                     </span>
                   </div>
@@ -122,21 +122,21 @@ export default function DashboardPage() {
             </div>
 
             {/* Curriculum Roadmap Progress */}
-            <div className="bento-card p-8">
-               <h2 className="text-xl font-bold text-white mb-6 tracking-tight">Capaian Tahapan</h2>
-               <div className="flex flex-col gap-6">
+            <div className="bento-card p-6 sm:p-8">
+               <h2 className="text-lg sm:text-xl font-bold text-white mb-5 sm:mb-6 tracking-tight">Capaian Tahapan</h2>
+               <div className="flex flex-col gap-4 sm:gap-6">
                 {CURRICULUM_LEVELS.map((level) => {
                   const progress = level.id < currentLevel ? 100 : level.id === currentLevel ? Math.floor((completedCount / level.totalLessons) * 100) : 0
                   const isLocked = level.id > currentLevel
                   return (
-                    <div key={level.id} className={`flex items-center gap-5 p-4 rounded-3xl transition-all ${isLocked ? 'bg-[#F8FAF9] opacity-70' : 'bg-white border border-[#E2E8F0] shadow-sm'}`}>
-                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 ${isLocked ? 'bg-[#E2E8F0]' : 'bg-[#064E3B]/10'}`}>
+                    <div key={level.id} className={`flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all ${isLocked ? 'bg-[#F8FAF9] opacity-70' : 'bg-white border border-[#E2E8F0] shadow-sm'}`}>
+                      <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl flex-shrink-0 ${isLocked ? 'bg-[#E2E8F0]' : 'bg-[#064E3B]/10'}`}>
                         {isLocked ? '🔒' : level.icon}
                       </div>
                       <div className="flex-1">
-                        <div className="flex justify-between items-baseline mb-2">
-                          <h3 className={`text-[15px] font-bold ${isLocked ? 'text-[#94A3B8]' : 'text-[#0F172A]'}`}>{level.title}</h3>
-                          <span className={`text-xs font-bold ${isLocked ? 'text-[#94A3B8]' : 'text-[#064E3B]'}`}>{progress}%</span>
+                        <div className="flex justify-between items-baseline mb-1.5 sm:mb-2">
+                          <h3 className={`text-sm sm:text-[15px] font-bold ${isLocked ? 'text-[#94A3B8]' : 'text-[#0F172A]'}`}>{level.title}</h3>
+                          <span className={`text-[10px] sm:text-xs font-bold ${isLocked ? 'text-[#94A3B8]' : 'text-[#064E3B]'}`}>{progress}%</span>
                         </div>
                         <div className="w-full bg-[#F1F5F9] rounded-full h-2">
                           <div
@@ -157,12 +157,12 @@ export default function DashboardPage() {
           <div className="flex flex-col gap-8 animate-fade-in" style={{ animationDelay: '0.3s' }}>
             
             {/* The Daily Target Block - Premium Dark Component */}
-            <div className="mesh-bg rounded-3xl p-8 text-white relative overflow-hidden bento-card border-none shadow-[0_20px_40px_-5px_rgba(2,44,34,0.3)]">
-              <div className="absolute top-0 right-0 p-6 text-7xl font-arabic text-white/5 pointer-events-none">هدف</div>
+            <div className="mesh-bg rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-white relative overflow-hidden bento-card border-none shadow-[0_20px_40px_-5px_rgba(2,44,34,0.3)]">
+              <div className="absolute top-0 right-0 p-6 text-6xl sm:text-7xl font-arabic text-white/5 pointer-events-none">هدف</div>
               
               <div className="bg-white/10 w-max px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#D97706] mb-4 backdrop-blur-md">Prioritas Hari Ini</div>
-              <h2 className="text-2xl font-bold mb-2">Sirkuit 5 Menit</h2>
-              <p className="text-white/70 text-sm font-medium mb-8">Penuhi kuota latihan harian Anda untuk membangun habit permanen.</p>
+              <h2 className="text-xl sm:text-2xl font-bold mb-2">Sirkuit 5 Menit</h2>
+              <p className="text-white/70 text-xs sm:text-sm font-medium mb-6 sm:mb-8">Penuhi kuota latihan harian Anda untuk membangun habit permanen.</p>
               
               <div className="w-full bg-white/10 rounded-full h-2 mb-4 shadow-inner">
                 <div
@@ -178,16 +178,16 @@ export default function DashboardPage() {
 
               <Link
                 href="/learn"
-                className="w-full py-4 bg-white text-[#022C22] font-bold rounded-2xl block text-center hover:scale-[1.02] transition-transform shadow-lg shadow-white/10"
+                className="w-full py-3 sm:py-4 bg-white text-[#022C22] font-bold rounded-xl sm:rounded-2xl block text-center hover:scale-[1.02] transition-transform shadow-lg shadow-white/10 text-sm sm:text-base"
               >
                 Mulai Sesi Sekarang
               </Link>
             </div>
 
             {/* Quick Actions */}
-            <div className="bento-card p-6">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-[#94A3B8] mb-5">Akses Cepat</h2>
-              <div className="flex flex-col gap-3">
+            <div className="bento-card p-5 sm:p-6">
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#94A3B8] mb-4 sm:mb-5">Akses Cepat</h2>
+              <div className="flex flex-col gap-2.5 sm:gap-3">
                 {[
                   { href: '/learn', icon: '🗺️', label: 'Peta Kurikulum', highlight: false },
                   { href: `/learn/writing/${HIJAIYAH_LETTERS[Math.max(0, completedCount)]?.id || 'alif'}`, icon: '✍️', label: 'Lanjutkan Menulis', highlight: true },
@@ -196,20 +196,20 @@ export default function DashboardPage() {
                   <Link
                     key={action.href}
                     href={action.href}
-                    className={`flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 group hover:-translate-y-0.5 ${
+                    className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl transition-all duration-300 group hover:-translate-y-0.5 ${
                       action.highlight 
                         ? 'bg-gradient-to-r from-[#D97706]/10 to-transparent border border-[#D97706]/30 hover:border-[#F59E0B]/60 hover:shadow-[0_0_20px_rgba(217,119,6,0.15)]' 
                         : 'bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20'
                     }`}
                   >
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center text-lg sm:text-xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 flex-shrink-0 ${
                       action.highlight 
                         ? 'bg-[#D97706]/20 border border-[#D97706]/30 shadow-inner' 
                         : 'bg-white/5 border border-white/10'
                     }`}>
                       {action.icon}
                     </div>
-                    <div className={`font-bold transition-colors duration-300 ${
+                    <div className={`text-sm sm:text-base font-bold transition-colors duration-300 ${
                       action.highlight ? 'text-white group-hover:text-[#FCD34D]' : 'text-[#CBD5E1] group-hover:text-white'
                     }`}>
                       {action.label}
@@ -225,32 +225,32 @@ export default function DashboardPage() {
             </div>
 
             {/* Lineup Preview */}
-            <div className="bento-card p-6">
-              <h2 className="text-sm font-bold uppercase tracking-widest text-[#94A3B8] mb-5">Antrean Materi</h2>
-              <div className="flex flex-col gap-3">
+            <div className="bento-card p-5 sm:p-6">
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-[#94A3B8] mb-4 sm:mb-5">Antrean Materi</h2>
+              <div className="flex flex-col gap-2.5 sm:gap-3">
                 {recentLetters.map((letter) => {
                   const isDone = !!completedLessons[letter.id]?.completed
                   return (
                     <Link
                       key={letter.id}
                       href={`/learn/writing/${letter.id}`}
-                      className={`flex items-center gap-4 p-3 rounded-2xl transition-all duration-300 border group hover:-translate-y-0.5 ${
+                      className={`flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl transition-all duration-300 border group hover:-translate-y-0.5 ${
                         isDone
                           ? 'bg-[#10B981]/10 border-[#10B981]/30 hover:border-[#10B981]/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.1)]'
                           : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                       }`}
                     >
-                      <div className={`w-12 h-12 flex items-center justify-center font-arabic text-2xl rounded-xl shadow-sm border transition-transform duration-300 group-hover:scale-110 ${
+                      <div className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center font-arabic text-xl sm:text-2xl rounded-lg sm:rounded-xl shadow-sm border transition-transform duration-300 group-hover:scale-110 flex-shrink-0 ${
                         isDone ? 'bg-[#10B981]/20 border-[#10B981]/30 text-[#10B981]' : 'bg-white/5 border-white/10 text-white'
                       }`}>
                         {letter.letter}
                       </div>
-                      <div className="flex-1">
-                        <div className={`text-[15px] font-bold mb-0.5 transition-colors ${isDone ? 'text-white' : 'text-[#E2E8F0] group-hover:text-white'}`}>{letter.name}</div>
-                        <div className={`text-xs font-semibold uppercase tracking-wider transition-colors ${isDone ? 'text-[#10B981]' : 'text-[#94A3B8]'}`}>/{letter.transliteration}/</div>
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-sm sm:text-[15px] font-bold mb-0.5 transition-colors truncate ${isDone ? 'text-white' : 'text-[#E2E8F0] group-hover:text-white'}`}>{letter.name}</div>
+                        <div className={`text-[10px] sm:text-xs font-semibold uppercase tracking-wider transition-colors truncate ${isDone ? 'text-[#10B981]' : 'text-[#94A3B8]'}`}>/{letter.transliteration}/</div>
                       </div>
                       {isDone ? (
-                        <div className="w-8 h-8 rounded-full bg-[#10B981]/20 flex items-center justify-center text-[#10B981] text-xs shadow-sm border border-[#10B981]/30">✓</div>
+                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#10B981]/20 flex items-center justify-center text-[#10B981] text-[10px] sm:text-xs shadow-sm border border-[#10B981]/30 flex-shrink-0">✓</div>
                       ) : (
                         <div className="text-[#64748B] opacity-50 group-hover:opacity-100 group-hover:text-white group-hover:translate-x-1.5 transition-all duration-300">→</div>
                       )}
