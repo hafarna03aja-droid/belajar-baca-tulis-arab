@@ -40,13 +40,13 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1E3A8A] flex items-center justify-center shadow-lg shadow-[#2563EB]/20 group-hover:scale-105 transition-transform duration-300">
-            <span className="text-white font-arabic text-xl font-bold translate-y-[-1px]">ق</span>
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1E3A8A] flex items-center justify-center shadow-lg shadow-[#2563EB]/20 group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
+            <span className="text-white font-arabic text-lg sm:text-xl font-bold translate-y-[-1px]">ق</span>
           </div>
-          <div>
-            <span className="text-xl font-extrabold text-white tracking-tight">Qur&apos;an Flow</span>
-            <p className="text-[10px] text-[#3B82F6] uppercase tracking-wider font-bold opacity-80 -mt-0.5">Platform Edukasi</p>
+          <div className="flex flex-col justify-center">
+            <span className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-tight">Qur&apos;an Flow</span>
+            <p className="text-[8px] sm:text-[10px] text-[#3B82F6] uppercase tracking-wider font-bold opacity-80 mt-0 sm:-mt-0.5">Platform Edukasi</p>
           </div>
         </Link>
 
@@ -82,13 +82,13 @@ export default function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-2 rounded-full bg-[#1E293B]/50 border border-[#334155] hover:bg-[#1E293B] transition-colors"
+          className="md:hidden p-1.5 sm:p-2 rounded-full bg-[#1E293B]/50 border border-[#334155] hover:bg-[#1E293B] transition-colors flex-shrink-0"
           aria-label="Toggle menu"
         >
-          <div className="w-5 h-4 flex flex-col justify-between relative">
-            <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? 'rotate-45 translate-y-[-1px]' : ''}`} />
-            <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? '-rotate-45 translate-y-[1px]' : ''}`} />
+          <div className="w-4 h-3 sm:w-5 sm:h-4 flex flex-col justify-between relative">
+            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? 'rotate-45 translate-y-[-0.5px] sm:translate-y-[-1px]' : ''}`} />
+            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? '-rotate-45 translate-y-[0.5px] sm:translate-y-[1px]' : ''}`} />
           </div>
         </button>
       </div>
