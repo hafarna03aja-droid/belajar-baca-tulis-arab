@@ -233,7 +233,7 @@ export default function WritingClient({
     const score = calcAccuracy(userCanvas, letter)
     setAccuracy(score)
     addSessionAccuracy(score)
-    if (score >= 60) {
+    if (score >= 30) {
       completeLesson(`${level}-${letter.id}`, score)
       setShowCelebration(true)
       setTimeout(() => setShowCelebration(false), 3000)

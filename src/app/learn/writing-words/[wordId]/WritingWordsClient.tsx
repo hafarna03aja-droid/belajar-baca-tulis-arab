@@ -192,7 +192,7 @@ export default function WritingWordsClient({
     const score = calcAccuracy(userCanvas, maskCanvas)
     setAccuracy(score)
     addSessionAccuracy(score)
-    if (score >= 60) {
+    if (score >= 30) {
       completeLesson(`${level}-${wordData.id}`, score)
       setShowCelebration(true)
       setTimeout(() => setShowCelebration(false), 3000)

@@ -68,7 +68,8 @@ export const useLearningStore = create<LearningStore>()(
 
         let newLevel = state.currentLevel
         const completedInCurrentLevel = Object.keys(newCompleted).filter(k => k.startsWith(`${state.currentLevel}-`)).length
-        const totalRequired = state.currentLevel === 7 ? 10 : (state.currentLevel >= 5 ? 100 : 28)
+        // Dibuat lebih mudah untuk naik level
+        const totalRequired = state.currentLevel === 7 ? 2 : (state.currentLevel >= 5 ? 3 : 3)
 
         if (completedInCurrentLevel >= totalRequired && state.currentLevel < 7) {
           newLevel = state.currentLevel + 1
