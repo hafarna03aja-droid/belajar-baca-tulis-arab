@@ -24,12 +24,12 @@ const CONTACT_CHANNELS = [
     color: '#F59E0B',
   },
   {
-    id: 'email-ulama',
+    id: 'email-ustadz',
     icon: '🕌',
-    label: 'Email Validasi Ulama',
-    value: 'ulama@quranflow.id',
-    description: 'Laporan konten keagamaan yang perlu diverifikasi ulama.',
-    href: 'mailto:ulama@quranflow.id',
+    label: 'Email Validasi Ustadz',
+    value: 'ustadz@quranflow.id',
+    description: 'Laporan konten keagamaan yang perlu diverifikasi ustadz.',
+    href: 'mailto:ustadz@quranflow.id',
     color: '#10B981',
   },
   {
@@ -54,7 +54,7 @@ const FAQ = [
   },
   {
     q: 'Bagaimana cara melaporkan konten yang tidak akurat?',
-    a: 'Kirim email ke ulama@quranflow.id dengan menyertakan nama huruf / materi yang dimaksud. Tim ulama kami akan merespons dalam 7 hari kerja.',
+    a: 'Kirim email ke ustadz@quranflow.id dengan menyertakan nama huruf / materi yang dimaksud. Tim ustadz kami akan merespons dalam 7 hari kerja.',
   },
   {
     q: 'Apakah data belajar saya aman?',
@@ -82,7 +82,7 @@ const TEAM = [
     color: '#F59E0B',
   },
   {
-    name: 'Panel Ulama',
+    name: 'Panel Ustadz',
     role: 'Validasi Keagamaan',
     icon: '🕌',
     desc: 'Ustadz & Qari bersertifikat yang memvalidasi seluruh konten keagamaan platform.',
@@ -392,7 +392,7 @@ export default function ContactPage() {
           <div className="flex gap-4 text-sm">
             <Link href="/" className="text-[#94A3B8] hover:text-white transition-colors">Beranda</Link>
             <Link href="/terms" className="text-[#94A3B8] hover:text-white transition-colors">Syarat & Ketentuan</Link>
-            <Link href="/validation" className="text-[#94A3B8] hover:text-white transition-colors">Validasi Ulama</Link>
+            <Link href="/validation" className="text-[#94A3B8] hover:text-white transition-colors">Validasi Ustadz</Link>
           </div>
         </div>
       </footer>

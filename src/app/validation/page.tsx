@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 
-const ULAMA_PANEL = [
+const USTADZ_PANEL = [
   {
     name: 'Ust. Dr. Ahmad Fauzi, Lc. M.A.',
     role: 'Ahli Tajwid & Makhraj Huruf',
@@ -44,8 +44,8 @@ const VALIDATION_PROCESS = [
   {
     step: '02',
     icon: '🔍',
-    title: 'Review Panel Ulama',
-    desc: 'Skrip dikirim ke minimal 2 anggota panel ulama. Setiap catatan dan koreksi didokumentasikan dalam sistem review internal.',
+    title: 'Review Panel Ustadz',
+    desc: 'Skrip dikirim ke minimal 2 anggota panel ustadz. Setiap catatan dan koreksi didokumentasikan dalam sistem review internal.',
     color: '#F59E0B',
   },
   {
@@ -59,7 +59,7 @@ const VALIDATION_PROCESS = [
     step: '04',
     icon: '✅',
     title: 'Validasi Final',
-    desc: 'Audio final diputar ulang di hadapan panel ulama untuk mendapatkan persetujuan resmi sebelum diunggah ke platform.',
+    desc: 'Audio final diputar ulang di hadapan panel ustadz untuk mendapatkan persetujuan resmi sebelum diunggah ke platform.',
     color: '#F59E0B',
   },
   {
@@ -90,7 +90,7 @@ const FAQS = [
   },
   {
     q: 'Bagaimana jika saya menemukan kesalahan makhraj dalam platform?',
-    a: 'Segera laporkan melalui email ulama@quranflow.id dengan mencantumkan huruf/audio yang bermasalah. Laporan akan diproses dan ditindaklanjuti oleh panel ulama dalam 7 hari kerja.',
+    a: 'Segera laporkan melalui email ustadz@quranflow.id dengan mencantumkan huruf/audio yang bermasalah. Laporan akan diproses dan ditindaklanjuti oleh panel ustadz dalam 7 hari kerja.',
   },
   {
     q: 'Apakah platform ini mendapat rekomendasi dari lembaga resmi Islam?',
@@ -116,7 +116,7 @@ export default function ValidationPage() {
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-5 leading-tight">
             Divalidasi oleh{' '}
-            <span className="text-gradient-vibrant">Para Ulama</span>
+            <span className="text-gradient-vibrant">Para Ustadz</span>
           </h1>
           <p className="text-[#94A3B8] text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             Kepercayaan Anda adalah amanah kami. Setiap konten makhraj dan kurikulum di Qur&apos;an Flow telah melalui proses validasi berlapis oleh panel ustadz dan Qari nasional berpengalaman.
@@ -124,7 +124,7 @@ export default function ValidationPage() {
 
           {/* Trust badges */}
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {['✅ Audio Tervalidasi Ulama', '📜 Referensi Kitab Klasik', '🏆 Qari Bersertifikat', '🔄 Audit 6 Bulanan'].map((badge) => (
+            {['✅ Audio Tervalidasi Ustadz', '📜 Referensi Kitab Klasik', '🏆 Qari Bersertifikat', '🔄 Audit 6 Bulanan'].map((badge) => (
               <span key={badge} className="text-xs text-white/70 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 font-medium">
                 {badge}
               </span>
@@ -133,38 +133,38 @@ export default function ValidationPage() {
         </div>
       </section>
 
-      {/* Panel Ulama */}
+      {/* Panel Ustadz */}
       <section className="py-16 px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Panel Ulama &amp; Konsultan</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Panel Ustadz &amp; Konsultan</h2>
             <p className="text-[#94A3B8] text-base max-w-xl mx-auto">
               Tim validasi kami terdiri dari para ahli tajwid, Qari, dan akademisi pendidikan Islam dari institusi-institusi terpercaya.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {ULAMA_PANEL.map((ulama, i) => (
+            {USTADZ_PANEL.map((ustadz, i) => (
               <div key={i} className="bento-card p-7 rounded-2xl flex flex-col gap-4 hover:scale-[1.01] transition-transform duration-300">
                 <div className="flex items-center gap-4">
                   <div
                     className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0"
-                    style={{ background: `${ulama.color}15`, border: `1px solid ${ulama.color}30` }}
+                    style={{ background: `${ustadz.color}15`, border: `1px solid ${ustadz.color}30` }}
                   >
-                    {ulama.avatar}
+                    {ustadz.avatar}
                   </div>
                   <div>
-                    <div className="text-white font-bold text-base leading-tight">{ulama.name}</div>
-                    <div className="text-xs mt-0.5" style={{ color: ulama.color }}>{ulama.role}</div>
+                    <div className="text-white font-bold text-base leading-tight">{ustadz.name}</div>
+                    <div className="text-xs mt-0.5" style={{ color: ustadz.color }}>{ustadz.role}</div>
                   </div>
                 </div>
 
                 <div className="text-xs text-[#94A3B8] bg-white/5 rounded-xl px-3 py-2 border border-white/5">
-                  🏛️ {ulama.institution}
+                  🏛️ {ustadz.institution}
                 </div>
 
                 <div className="space-y-1.5">
-                  {ulama.credentials.map((c, j) => (
+                  {ustadz.credentials.map((c, j) => (
                     <div key={j} className="flex items-start gap-2 text-xs text-[#94A3B8]">
                       <span className="text-[#10B981] flex-shrink-0 mt-0.5">✓</span>
                       <span>{c}</span>
@@ -174,9 +174,9 @@ export default function ValidationPage() {
 
                 <div
                   className="mt-auto text-xs font-bold px-3 py-1.5 rounded-lg self-start"
-                  style={{ background: `${ulama.color}15`, color: ulama.color }}
+                  style={{ background: `${ustadz.color}15`, color: ustadz.color }}
                 >
-                  Spesialisasi: {ulama.specialty}
+                  Spesialisasi: {ustadz.specialty}
                 </div>
               </div>
             ))}
@@ -275,10 +275,10 @@ export default function ValidationPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="mailto:ulama@quranflow.id"
+              href="mailto:ustadz@quranflow.id"
               className="px-7 py-3.5 bg-[#3B82F6] text-white font-bold rounded-xl text-sm hover:bg-[#2563EB] transition-colors"
             >
-              📧 Kirim Laporan ke Panel Ulama
+              📧 Kirim Laporan ke Panel Ustadz
             </a>
             <Link
               href="/terms"
@@ -300,7 +300,7 @@ export default function ValidationPage() {
             <div className="font-bold text-white">Qur&apos;an Flow</div>
           </div>
           <div className="text-xs sm:text-sm text-[#94A3B8]">
-            © {new Date().getFullYear()} Di Buat oleh24 Learning Centre — Divalidasi oleh Para Ulama Indonesia
+            © {new Date().getFullYear()} Dibuat oleh 24 Learning Centre — Divalidasi oleh Para Ustadz Indonesia
           </div>
           <div className="flex gap-4 text-sm">
             <Link href="/" className="text-[#94A3B8] hover:text-white transition-colors">Beranda</Link>

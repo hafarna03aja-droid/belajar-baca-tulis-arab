@@ -88,7 +88,7 @@ Pelanggaran dapat berakibat pada penangguhan atau penghapusan akun permanen.`
     title: '7. Validasi Keagamaan & Akurasi Makhraj',
     content: `Qur'an Flow berkomitmen penuh terhadap akurasi konten keagamaan:
 
-7.1 Panel Ulama: Konten audio makhraj dan materi kurikulum kami divalidasi oleh Panel Ulama & Qari yang terdiri dari ustadz-ustadz bersertifikat dalam ilmu tajwid dan tahsin.
+7.1 Panel Ustadz: Konten audio makhraj dan materi kurikulum kami divalidasi oleh Panel Ustadz & Qari yang terdiri dari ustadz-ustadz bersertifikat dalam ilmu tajwid dan tahsin.
 
 7.2 Proses Validasi: Setiap audio rekaman melalui proses review berlapis oleh minimal dua ustadz sebelum dipublikasikan ke platform.
 
@@ -138,7 +138,7 @@ Penggunaan berkelanjutan setelah perubahan dianggap sebagai persetujuan Anda ter
 • Organisasi: 24 Learning Centre
 • Waktu Respons: 3-5 hari kerja
 
-Untuk laporan konten keagamaan yang tidak akurat, gunakan email: ulama@quranflow.id`
+Untuk laporan konten keagamaan yang tidak akurat, gunakan email: ustadz@quranflow.id`
   }
 ]
 
@@ -247,7 +247,7 @@ export default function TermsPage() {
                     href="/validation"
                     className="text-sm text-[#3B82F6] hover:text-white transition-colors underline underline-offset-2"
                   >
-                    Lihat Validasi Ulama kami →
+                    Lihat Validasi Ustadz kami →
                   </Link>
                 </div>
               </div>
@@ -270,7 +270,7 @@ export default function TermsPage() {
           </div>
           <div className="flex gap-4 text-sm">
             <Link href="/" className="text-[#94A3B8] hover:text-white transition-colors">Beranda</Link>
-            <Link href="/validation" className="text-[#94A3B8] hover:text-white transition-colors">Validasi Ulama</Link>
+            <Link href="/validation" className="text-[#94A3B8] hover:text-white transition-colors">Validasi Ustadz</Link>
           </div>
         </div>
       </footer>

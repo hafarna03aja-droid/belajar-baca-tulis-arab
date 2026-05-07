@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env.local' });
+// require('dotenv').config({ path: '.env.local' });
 const { createClient } = require('@supabase/supabase-js');
 
 // Anda memerlukan SERVICE_ROLE_KEY untuk mengubah file. 
