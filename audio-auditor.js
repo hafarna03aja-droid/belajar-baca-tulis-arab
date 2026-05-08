@@ -49,7 +49,7 @@ const EXPECTED_AUDIO_FILES = [
   { file: 'darasa.mp3',         word: 'دَرَسَ',       meaning: 'Belajar',         category: 'Sambung 2-3' },
   { file: 'kataba.mp3',         word: 'كَتَبَ',       meaning: 'Menulis',         category: 'Sambung 2-3' },
   { file: 'jalasa.mp3',         word: 'جَلَسَ',       meaning: 'Duduk',           category: 'Sambung 2-3' },
-  { file: 'naara.mp3',          word: 'نَصَرَ',       meaning: 'Menolong',        category: 'Sambung 2-3' },
+  { file: 'nasara.mp3',         word: 'نَصَرَ',       meaning: 'Menolong',        category: 'Sambung 2-3' },
   { file: 'akala.mp3',          word: 'اَكَلَ',       meaning: 'Makan',           category: 'Sambung 2-3' },
   { file: 'dhahaba.mp3',        word: 'ذَهَبَ',       meaning: 'Pergi',           category: 'Sambung 2-3' },
   { file: 'syaraba.mp3',        word: 'شَرَبَ',       meaning: 'Minum',           category: 'Sambung 2-3' },
