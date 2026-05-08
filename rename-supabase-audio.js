@@ -1,20 +1,34 @@
-// require('dotenv').config({ path: '.env.local' });
+const fs = require('fs');
+const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 
-// Anda memerlukan SERVICE_ROLE_KEY untuk mengubah file. 
-// Dapatkan di Supabase Dashboard -> Project Settings -> API -> service_role secret
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || 'PASTE_SERVICE_ROLE_KEY_ANDA_DISINI';
+// Manually load .env.local
+const envPath = path.join(__dirname, '.env.local');
+let SUPABASE_URL, SUPABASE_SERVICE_KEY;
 
-if (SUPABASE_SERVICE_KEY === 'PASTE_SERVICE_ROLE_KEY_ANDA_DISINI') {
-  console.error("❌ Error: Anda belum memasukkan SUPABASE_SERVICE_ROLE_KEY.");
-  console.error("Silakan paste key tersebut ke dalam script ini atau di file .env.local");
+try {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  const envVars = {};
+  envContent.split('\n').forEach(line => {
+    const [key, ...value] = line.split('=');
+    if (key && value.length > 0) {
+      envVars[key.trim()] = value.join('=').trim().replace(/^"|"$/g, '');
+    }
+  });
+  SUPABASE_URL = envVars.NEXT_PUBLIC_SUPABASE_URL;
+  SUPABASE_SERVICE_KEY = envVars.SUPABASE_SERVICE_ROLE_KEY;
+} catch (err) {
+  console.error("❌ Gagal membaca .env.local:", err.message);
+}
+
+if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+  console.error("❌ Error: SUPABASE_URL atau SUPABASE_SERVICE_ROLE_KEY tidak ditemukan di .env.local");
   process.exit(1);
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 const BUCKET_NAME = 'quran-audio';
-const FOLDER_NAME = 'huruf';
+const FOLDER_NAME = 'iqro';
 
 async function renameAudioFiles() {
   console.log(`🔍 Memeriksa file di bucket '${BUCKET_NAME}', folder '${FOLDER_NAME}'...`);

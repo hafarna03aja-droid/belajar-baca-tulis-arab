@@ -5,31 +5,13 @@ import Navbar from '@/components/Navbar'
 
 const USTADZ_PANEL = [
   {
-    name: 'Ust. Dr. Ahmad Fauzi, Lc. M.A.',
-    role: 'Ahli Tajwid & Makhraj Huruf',
-    institution: 'Pondok Pesantren Dar Al-Quran, Jakarta',
-    credentials: ['Ijazah Sanad Al-Qur\'an – Mesir (Al-Azhar University)', 'S3 Ilmu Al-Qur\'an & Tafsir – UIN Syarif Hidayatullah', 'Pengajar Tahsin aktif sejak 2005'],
-    specialty: 'Makhraj & Sifat Huruf',
+    name: 'Ust. Daryanto',
+    role: 'Pengasuh Kuttab Al Kahfi',
+    institution: 'Islamic Centre PDHI Playen Gunungkidul',
+    credentials: ['Pengajar Tahsin sejak 2010', 'Pegiat Dakwah'],
+    specialty: 'Tahsin',
     avatar: '👳',
     color: '#F59E0B',
-  },
-  {
-    name: 'Ust. Hafi dz Al-Qur\'an Muhammad Irfan',
-    role: 'Qari Nasional & Konsultan Audio',
-    institution: 'Lembaga Pengembangan Tilawatil Qur\'an (LPTQ) Nasional',
-    credentials: ['Juara 1 MTQ Nasional – Cabang Tilawah', 'Trainer Qira\'at 7 – PTIQ Jakarta', 'Narasumber program Tahfidz TVRI Nasional'],
-    specialty: 'Produksi Audio Makhraj',
-    avatar: '🎙️',
-    color: '#3B82F6',
-  },
-  {
-    name: 'Ustz. Dr. Siti Rahmah, M.Pd.',
-    role: 'Ahli Pedagogis Pendidikan Islam',
-    institution: 'Universitas Islam Negeri Malang',
-    credentials: ['S3 Teknologi Pendidikan Islam – UIN Malang', 'Peneliti metode pembelajaran Hijaiyah digital', 'Penulis buku "Tajwid untuk Generasi Digital"'],
-    specialty: 'Kurikulum & Pedagogis',
-    avatar: '👩‍🏫',
-    color: '#10B981',
   },
 ]
 
