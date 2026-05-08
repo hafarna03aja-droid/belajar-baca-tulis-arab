@@ -1,12 +1,28 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { useLearningStore } from '@/store/learningStore'
 import { CURRICULUM_LEVELS, HIJAIYAH_LETTERS } from '@/lib/hijaiyah-data'
 import Navbar from '@/components/Navbar'
+import dynamic from 'next/dynamic'
+
+const BadgesPanel = dynamic(() => import('@/components/BadgesPanel'), { ssr: false })
+const CertificateModal = dynamic(() => import('@/components/CertificateModal'), { ssr: false })
+
+// Level mana saja yang memberikan sertifikat
+const CERTIFICATE_LEVELS = [
+  { levelId: 1, minCompleted: 3, title: 'Pondasi: Huruf Tunggal',    icon: '✍️', color: 'from-blue-500/20 to-cyan-500/20',    border: 'border-blue-500/30' },
+  { levelId: 2, minCompleted: 3, title: 'Harakat Dasar',              icon: '🗣️', color: 'from-sky-500/20 to-blue-400/20',    border: 'border-sky-500/30' },
+  { levelId: 3, minCompleted: 3, title: 'Transformasi Bentuk',        icon: '🧩', color: 'from-amber-500/20 to-yellow-400/20', border: 'border-amber-500/30' },
+  { levelId: 4, minCompleted: 3, title: 'Membaca Lanjut',             icon: '🌊', color: 'from-teal-500/20 to-emerald-500/20', border: 'border-teal-500/30' },
+  { levelId: 5, minCompleted: 3, title: 'Membaca Kata',               icon: '📖', color: 'from-green-500/20 to-lime-400/20',   border: 'border-green-500/30' },
+  { levelId: 6, minCompleted: 3, title: 'Menulis Kata',               icon: '🖊️', color: 'from-emerald-600/20 to-teal-400/20', border: 'border-emerald-600/30' },
+]
 
 export default function DashboardPage() {
-  const { streakDays, totalXP, completedLessons, currentLevel, userName } = useLearningStore()
+  const { streakDays, totalXP, completedLessons, currentLevel, userName, isSyncing, lastSynced } = useLearningStore()
+  const [activeCert, setActiveCert] = useState<typeof CERTIFICATE_LEVELS[0] | null>(null)
 
   const completedCount = Object.values(completedLessons).filter((l) => l.completed).length
   const totalLessons = HIJAIYAH_LETTERS.length
@@ -35,11 +51,27 @@ export default function DashboardPage() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-32 pb-24">
         {/* Header */}
-        <div className="mb-8 sm:mb-12 animate-fade-in text-center md:text-left mt-2 sm:mt-0">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight break-words">
-            <span className="text-gradient-vibrant block sm:inline">Ruang Kendali</span> <span className="inline-block">{userName ? userName.split(' ')[0] : 'Anda'}</span>
-          </h1>
-          <p className="text-sm sm:text-lg text-[#CBD5E1] font-medium px-2 md:px-0">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
+        <div className="mb-8 sm:mb-12 animate-fade-in flex flex-col md:flex-row md:items-end justify-between gap-6 text-center md:text-left mt-2 sm:mt-0">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 sm:mb-3 tracking-tight break-words">
+              <span className="text-gradient-vibrant block sm:inline">Ruang Kendali</span> <span className="inline-block">{userName ? userName.split(' ')[0] : 'Anda'}</span>
+            </h1>
+            <p className="text-sm sm:text-lg text-[#CBD5E1] font-medium px-2 md:px-0">Bukan sekadar belajar, ini adalah investasi spiritual Anda.</p>
+          </div>
+          
+          <div className="flex flex-col items-center md:items-end gap-2">
+            <div className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all duration-500 ${isSyncing ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}`}>
+              <div className={`w-2 h-2 rounded-full ${isSyncing ? 'bg-blue-400 animate-pulse' : 'bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]'}`} />
+              <span className="text-[10px] font-extrabold uppercase tracking-widest">
+                {isSyncing ? 'Menyinkronkan...' : 'Terhubung & Aman'}
+              </span>
+            </div>
+            {lastSynced && !isSyncing && (
+              <span className="text-[9px] font-bold text-[#64748B] uppercase tracking-tighter opacity-60">
+                Data Terakhir Disimpan: {new Date(lastSynced).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Stats Row - Bento Style */}
@@ -51,7 +83,7 @@ export default function DashboardPage() {
             { label: 'Pelajaran', value: completedCount, unit: `/ ${totalLessons}`, icon: '🎯', color: '#D97706', glow: 'glow-gold' },
             { label: 'Level Saya', value: currentLevel, unit: '/ 6 level', icon: '🎖️', color: '#B45309', glow: 'glow-gold' },
           ].map((stat) => (
-            <div key={stat.label} className={`glass-premium p-4 sm:p-6 flex flex-col justify-between rounded-2xl sm:rounded-3xl transition-all hover:scale-[1.05] hover:z-10 ${stat.glow}`}>
+            <div key={stat.label} className={`card-3d-glow glass-premium p-4 sm:p-6 flex flex-col justify-between rounded-2xl sm:rounded-3xl transition-all ${stat.glow}`}>
               <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{stat.icon}</div>
               <div>
                 <div className="flex items-baseline gap-1 sm:gap-1.5 mb-1">
@@ -261,6 +293,70 @@ export default function DashboardPage() {
             </div>
 
           </div>
+          {/* === CERTIFICATES PANEL === */}
+          <section className="bento-card p-6 col-span-full">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-2xl">🎓</span>
+              <div>
+                <h2 className="text-[13px] font-extrabold uppercase tracking-widest text-white">Sertifikat Saya</h2>
+                <p className="text-[11px] text-[#64748B] font-medium mt-0.5">Unduh bukti pencapaian resmi Anda</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {CERTIFICATE_LEVELS.map((cert) => {
+                const done = Object.keys(completedLessons).filter(
+                  k => k.startsWith(`${cert.levelId}-`) && completedLessons[k].completed
+                ).length >= cert.minCompleted
+                return (
+                  <button
+                    key={cert.levelId}
+                    onClick={() => done && setActiveCert(cert)}
+                    disabled={!done}
+                    className={`relative rounded-2xl border p-5 flex flex-col items-center text-center gap-3 transition-all duration-300
+                      ${done
+                        ? `bg-gradient-to-br ${cert.color} ${cert.border} hover:scale-105 hover:shadow-lg cursor-pointer`
+                        : 'bg-[#0F172A] border-[#1E293B] opacity-40 grayscale cursor-not-allowed'
+                      }`}
+                  >
+                    {done && (
+                      <div className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center shadow-md">
+                        <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                    {!done && <div className="absolute top-2.5 right-2.5 text-sm text-[#334155]">🔒</div>}
+                    <span className="text-3xl">{cert.icon}</span>
+                    <div>
+                      <p className="text-[9px] font-extrabold uppercase tracking-widest text-[#F59E0B] mb-1">Level {cert.levelId}</p>
+                      <p className={`text-[11px] font-bold leading-tight ${done ? 'text-white' : 'text-[#475569]'}`}>{cert.title}</p>
+                    </div>
+                    {done && (
+                      <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-400">⬇ Unduh</span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          {/* === BADGES PANEL === */}
+          <BadgesPanel />
+
+          {/* Certificate Modal */}
+          {activeCert && (
+            <CertificateModal
+              isOpen={!!activeCert}
+              onClose={() => setActiveCert(null)}
+              userName={userName || 'Santri'}
+              levelTitle={activeCert.title}
+              levelIcon={activeCert.icon}
+              levelId={activeCert.levelId}
+              xp={totalXP}
+              completedDate={new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+            />
+          )}
+
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { HIJAIYAH_LETTERS } from '@/lib/hijaiyah-data'
 import { useLearningStore } from '@/store/learningStore'
 import Navbar from '@/components/Navbar'
+import { resolveAudioUrl } from '@/lib/audio-utils'
 
 function speakArabic(text: string) {
   if (typeof window === 'undefined') return
@@ -90,7 +91,7 @@ export default function ReadingClient({
     }
 
     const targetHarakat = harakatOptions[index]
-    const audioUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/quran-audio/huruf/${letter.id}-${targetHarakat.id}.mp3`
+    const audioUrl = resolveAudioUrl('huruf', `${letter.id}-${targetHarakat.id}.mp3`)
     const audio = new Audio(audioUrl)
     audioRef.current = audio
     

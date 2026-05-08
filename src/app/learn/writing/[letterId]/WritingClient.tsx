@@ -1,30 +1,36 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { HIJAIYAH_LETTERS } from '@/lib/hijaiyah-data'
 import { useLearningStore } from '@/store/learningStore'
 import Navbar from '@/components/Navbar'
+import { computeBadgeState, getUnlockedBadges, Badge } from '@/lib/badges-data'
 
 interface Point {
   x: number
   y: number
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function calcAccuracy(userCanvas: HTMLCanvasElement, guidePath: string | undefined): number {
-  if (!guidePath) return 0
+interface AccuracyResult {
+  score: number;
+  heatmapData: ImageData | null;
+}
+
+function calcAccuracy(userCanvas: HTMLCanvasElement, guidePath: string | undefined): AccuracyResult {
+  if (!guidePath) return { score: 0, heatmapData: null }
   const w = userCanvas.width
   const h = userCanvas.height
   const userCtx = userCanvas.getContext('2d')
-  if (!userCtx) return 0
+  if (!userCtx) return { score: 0, heatmapData: null }
   const userData = userCtx.getImageData(0, 0, w, h).data
+  
   const skeletonCanvas = document.createElement('canvas')
   skeletonCanvas.width = w
   skeletonCanvas.height = h
   const skeletonCtx = skeletonCanvas.getContext('2d')
-  if (!skeletonCtx) return 0
+  if (!skeletonCtx) return { score: 0, heatmapData: null }
   skeletonCtx.lineWidth = 6
   skeletonCtx.lineCap = 'round'
   skeletonCtx.lineJoin = 'round'
@@ -33,11 +39,12 @@ function calcAccuracy(userCanvas: HTMLCanvasElement, guidePath: string | undefin
   skeletonCtx.scale(scale, scale)
   skeletonCtx.stroke(new Path2D(guidePath))
   const skeletonData = skeletonCtx.getImageData(0, 0, w, h).data
+  
   const zoneCanvas = document.createElement('canvas')
   zoneCanvas.width = w
   zoneCanvas.height = h
   const zoneCtx = zoneCanvas.getContext('2d')
-  if (!zoneCtx) return 0
+  if (!zoneCtx) return { score: 0, heatmapData: null }
   zoneCtx.lineWidth = 75
   zoneCtx.lineCap = 'round'
   zoneCtx.lineJoin = 'round'
@@ -45,31 +52,59 @@ function calcAccuracy(userCanvas: HTMLCanvasElement, guidePath: string | undefin
   zoneCtx.scale(scale, scale)
   zoneCtx.stroke(new Path2D(guidePath))
   const zoneData = zoneCtx.getImageData(0, 0, w, h).data
+
+  // Persiapan Heatmap
+  const heatmapOutput = userCtx.createImageData(w, h)
+  const hData = heatmapOutput.data
+
   let totalUser = 0
   let userInZone = 0
   let totalSkeleton = 0
   let skeletonCovered = 0
-  for (let i = 3; i < userData.length; i += 4) {
-    const u = userData[i] > 50
-    const s = skeletonData[i] > 50
-    const z = zoneData[i] > 50
+  
+  for (let i = 0; i < userData.length; i += 4) {
+    const alpha = userData[i + 3]
+    const u = alpha > 50
+    const s = skeletonData[i + 3] > 50
+    const z = zoneData[i + 3] > 50
+    
     if (u) {
       totalUser++
-      if (z) userInZone++
+      if (z) {
+        userInZone++
+        // Warnai hijau transparan di heatmap untuk area yang benar
+        hData[i] = 16;     // R
+        hData[i+1] = 185;  // G
+        hData[i+2] = 129;  // B
+        hData[i+3] = 160;  // A
+      } else {
+        // Warnai merah transparan untuk area yang melenceng
+        hData[i] = 239;    // R
+        hData[i+1] = 68;   // G
+        hData[i+2] = 68;   // B
+        hData[i+3] = 180;  // A
+      }
     }
+    
     if (s) {
       totalSkeleton++
       if (u) skeletonCovered++
     }
   }
-  if (totalUser === 0) return 0
-  if (totalSkeleton === 0) return 100
+  
+  if (totalUser === 0) return { score: 0, heatmapData: null }
+  if (totalSkeleton === 0) return { score: 100, heatmapData: heatmapOutput }
+  
   const precision = userInZone / totalUser
   const recall = skeletonCovered / totalSkeleton
   const mappedRecall = Math.min(1, recall / 0.50)
   const mappedPrecision = Math.min(1, precision / 0.50)
   const f1 = (2 * mappedPrecision * mappedRecall) / (mappedPrecision + mappedRecall || 1)
-  return Math.round(f1 * 100)
+  
+  return { 
+    score: Math.round(f1 * 100), 
+    heatmapData: heatmapOutput 
+  }
 }
 
 export default function WritingClient({
@@ -83,17 +118,29 @@ export default function WritingClient({
   const [currentPath, setCurrentPath] = useState<Point[]>([])
   const [accuracy, setAccuracy] = useState<number | null>(null)
   const [showCelebration, setShowCelebration] = useState(false)
+  const [newBadges, setNewBadges] = useState<Badge[]>([])
   const [strokeWidth, setStrokeWidth] = useState(12)
   const [showGuide, setShowGuide] = useState(true)
+  const [showHeatmap, setShowHeatmap] = useState(false)
+  const [heatmapImage, setHeatmapImage] = useState<ImageData | null>(null)
   const [activeForm, setActiveForm] = useState<'isolated' | 'initial' | 'medial' | 'final'>('isolated')
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const guideCanvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const { completeLesson, isLessonCompleted, addSessionAccuracy } = useLearningStore()
+  const { completeLesson, isLessonCompleted, addSessionAccuracy, isSyncing, totalXP, streakDays, completedLessons, currentLevel } = useLearningStore()
   const searchParams = useSearchParams()
   const level = parseInt(searchParams.get('level') || '1', 10)
+
+  // Track previous badges untuk deteksi badge baru
+  const prevBadgeIds = useRef<Set<string>>(new Set())
+
+  // Pre-compute badge state sebelum lesson selesai
+  const badgeStateBefore = useMemo(() =>
+    computeBadgeState(totalXP, streakDays, completedLessons, currentLevel),
+    [totalXP, streakDays, completedLessons, currentLevel]
+  )
 
   useEffect(() => {
     params.then((p) => setLetterId(p.letterId))
@@ -155,6 +202,12 @@ export default function WritingClient({
     const ctx = canvas.getContext('2d')
     if (!ctx) return
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    // Render Heatmap jika aktif
+    if (showHeatmap && heatmapImage) {
+      ctx.putImageData(heatmapImage, 0, 0)
+    }
+
     const allPaths = [...paths]
     if (currentPath.length > 0) allPaths.push(currentPath)
     allPaths.forEach((path) => {
@@ -166,13 +219,13 @@ export default function WritingClient({
         const yc = (path[i - 1].y + path[i].y) / 2
         ctx.quadraticCurveTo(path[i - 1].x, path[i - 1].y, xc, yc)
       }
-      ctx.strokeStyle = '#3B82F6'
+      ctx.strokeStyle = showHeatmap ? 'rgba(255,255,255,0.4)' : '#3B82F6'
       ctx.lineWidth = strokeWidth
       ctx.lineCap = 'round'
       ctx.lineJoin = 'round'
       ctx.stroke()
     })
-  }, [paths, currentPath, strokeWidth])
+  }, [paths, currentPath, strokeWidth, showHeatmap, heatmapImage])
 
   useEffect(() => {
     redrawCanvas()
@@ -232,13 +285,26 @@ export default function WritingClient({
   const handleCheck = () => {
     const userCanvas = canvasRef.current
     if (!userCanvas || !letter) return
-    const score = calcAccuracy(userCanvas, letter.positionForms[activeForm].guidePath)
+    const { score, heatmapData } = calcAccuracy(userCanvas, letter.positionForms[activeForm].guidePath)
     setAccuracy(score)
+    setHeatmapImage(heatmapData)
+    setShowHeatmap(true)
     addSessionAccuracy(score)
     if (score >= 30) {
+      // Deteksi badge yang sudah ada SEBELUM completeLesson
+      const beforeIds = new Set(getUnlockedBadges(badgeStateBefore).map(b => b.id))
       completeLesson(`${level}-${letter.id}`, score)
+      // Ambil state terbaru setelah update
+      const afterState = computeBadgeState(
+        useLearningStore.getState().totalXP,
+        useLearningStore.getState().streakDays,
+        useLearningStore.getState().completedLessons,
+        useLearningStore.getState().currentLevel
+      )
+      const newlyUnlocked = getUnlockedBadges(afterState).filter(b => !beforeIds.has(b.id))
+      setNewBadges(newlyUnlocked)
       setShowCelebration(true)
-      setTimeout(() => setShowCelebration(false), 3000)
+      setTimeout(() => { setShowCelebration(false); setNewBadges([]) }, 5000)
     }
   }
 
@@ -246,6 +312,8 @@ export default function WritingClient({
     setPaths([])
     setCurrentPath([])
     setAccuracy(null)
+    setHeatmapImage(null)
+    setShowHeatmap(false)
     const canvas = canvasRef.current
     if (canvas) {
       const ctx = canvas.getContext('2d')
@@ -271,12 +339,42 @@ export default function WritingClient({
     <div className="min-h-screen bg-[var(--color-bg)] text-white">
       <Navbar />
       {showCelebration && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-          <div className="bg-[#1E293B]/95 backdrop-blur-md rounded-3xl p-10 shadow-2xl text-center animate-bounce-in border border-[#334155] shadow-[#2563EB]/20">
-            <div className="text-6xl mb-3">🎉</div>
-            <div className="text-2xl font-extrabold text-[#3B82F6] mb-1">Presisi Tinggi!</div>
-            <div className="text-[#94A3B8] font-bold">Akurasi: {accuracy}%</div>
-            <div className="font-arabic text-6xl text-[#F59E0B] mt-4">{letter?.letter}</div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#020617]/80 backdrop-blur-sm animate-fade-in">
+          <div className="bg-[#1E293B]/90 backdrop-blur-xl rounded-[2.5rem] p-10 shadow-2xl text-center animate-bounce-in border border-white/10 shadow-[#2563EB]/40 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 to-transparent pointer-events-none" />
+            <div className="text-6xl mb-4">✨</div>
+            <div className="text-[10px] font-extrabold tracking-[0.2em] text-[#F59E0B] uppercase mb-2">Pencapaian Baru</div>
+            <div className="text-3xl font-extrabold text-white mb-2 tracking-tight">Presisi Luar Biasa!</div>
+            <div className="text-[#94A3B8] font-bold text-lg mb-6">Skor Akurasi: <span className="text-[#3B82F6]">{accuracy}%</span></div>
+            
+            <div className="bg-white/5 rounded-3xl p-8 mb-6 border border-white/5">
+              <div className="font-arabic text-8xl text-white leading-none">{letter?.positionForms[activeForm]?.char || letter?.letter}</div>
+            </div>
+
+            {/* Badge baru yang ter-unlock */}
+            {newBadges.length > 0 && (
+              <div className="mb-5">
+                <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#F59E0B] mb-3">🏅 Lencana Baru Terbuka!</p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  {newBadges.map(b => (
+                    <div key={b.id} className={`flex items-center gap-2 px-4 py-2 rounded-2xl bg-gradient-to-r ${b.color} border border-white/10`}>
+                      <span className="text-xl">{b.icon}</span>
+                      <div className="text-left">
+                        <p className="text-[10px] font-extrabold text-white">{b.name}</p>
+                        {b.nameAr && <p className="font-arabic text-sm text-[#F59E0B] leading-none">{b.nameAr}</p>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col items-center gap-2">
+              <div className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all duration-500 ${isSyncing ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'}`}>
+                <div className={`w-1.5 h-1.5 rounded-full ${isSyncing ? 'bg-blue-400 animate-pulse' : 'bg-emerald-400'}`} />
+                {isSyncing ? 'Menyimpan Progres...' : 'Progres Tersimpan Otomatis'}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -372,8 +470,18 @@ export default function WritingClient({
               </div>
               <div className="bg-[#0B1120] border-t border-[#334155] p-4">
                 {accuracy !== null ? (
-                  <div className={`p-4 rounded-2xl text-[13px] font-bold uppercase tracking-wide flex items-center justify-center gap-2 ${accuracy >= 70 ? 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30' : accuracy >= 50 ? 'bg-[#F59E0B]/20 text-[#FCD34D] border border-[#F59E0B]/30' : 'bg-red-900/30 text-red-400 border border-red-800'}`}>
-                    {accuracy >= 70 ? '🎯 Sempurna!' : accuracy >= 50 ? '⚠️ Terus Berlatih!' : '🛑 Kurang Akurat.'} — Akurasi Algoritmik: <span className="font-extrabold text-base ml-1">{accuracy}%</span>
+                  <div className="flex flex-col gap-3">
+                    <div className={`p-4 rounded-2xl text-[13px] font-bold uppercase tracking-wide flex items-center justify-center gap-2 ${accuracy >= 70 ? 'bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30' : accuracy >= 50 ? 'bg-[#F59E0B]/20 text-[#FCD34D] border border-[#F59E0B]/30' : 'bg-red-900/30 text-red-400 border border-red-800'}`}>
+                      {accuracy >= 70 ? '🎯 Sempurna!' : accuracy >= 50 ? '⚠️ Terus Berlatih!' : '🛑 Kurang Akurat.'} — Akurasi Algoritmik: <span className="font-extrabold text-base ml-1">{accuracy}%</span>
+                    </div>
+                    {heatmapImage && (
+                      <button 
+                        onClick={() => setShowHeatmap(!showHeatmap)}
+                        className={`py-2 text-[10px] font-extrabold uppercase tracking-widest rounded-xl border transition-all ${showHeatmap ? 'bg-[#3B82F6] border-[#3B82F6] text-white shadow-lg shadow-[#3B82F6]/20' : 'bg-transparent border-[#334155] text-[#94A3B8] hover:text-white'}`}
+                      >
+                        {showHeatmap ? 'Hide Heatmap Analysis' : 'Show Heatmap Analysis'}
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className="p-4 rounded-2xl text-[13px] font-bold uppercase tracking-wide text-[#94A3B8] border border-dashed border-[#334155] text-center">Sistem stand-by menanti hasil eksekusi tulisan Anda.</div>

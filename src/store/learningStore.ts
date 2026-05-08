@@ -20,6 +20,8 @@ interface LearningStore {
   totalXP: number
   userId: string | null
   userName: string | null
+  isSyncing: boolean
+  lastSynced: string | null
 
   // Current session
   currentLetterIndex: number
@@ -49,6 +51,8 @@ export const useLearningStore = create<LearningStore>()(
       totalXP: 0,
       userId: null,
       userName: null,
+      isSyncing: false,
+      lastSynced: null,
       currentLetterIndex: 0,
       sessionAccuracy: [],
 
@@ -85,8 +89,9 @@ export const useLearningStore = create<LearningStore>()(
 
         // Sync with Supabase if logged in
         if (state.userId) {
+          set({ isSyncing: true })
           const supabase = createClient()
-          const latestState = get() // Ambil state terbaru setelah updateStreak dipanggil
+          const latestState = get()
 
           supabase.from('profiles').upsert({
             id: state.userId,
@@ -96,6 +101,7 @@ export const useLearningStore = create<LearningStore>()(
             streak_days: latestState.streakDays,
             updated_at: new Date().toISOString()
           }).then(({ error }) => {
+            set({ isSyncing: false, lastSynced: error ? state.lastSynced : new Date().toISOString() })
             if (error) console.error('Error syncing to Supabase:', error)
           })
         }
@@ -177,39 +183,47 @@ export const useLearningStore = create<LearningStore>()(
 
       syncWithSupabase: async () => {
         const state = get()
-        if (!state.userId) return
+        if (!state.userId || state.isSyncing) return
 
+        set({ isSyncing: true })
         const supabase = createClient()
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('full_name, completed_lessons, total_xp, current_jilid, streak_days')
-          .eq('id', state.userId)
-          .single()
+        
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('full_name, completed_lessons, total_xp, current_jilid, streak_days')
+            .eq('id', state.userId)
+            .single()
 
-        if (error && error.code !== 'PGRST116') {
-          console.error('Error fetching progress from Supabase:', error)
-          return
-        }
+          if (error && error.code !== 'PGRST116') {
+            throw error
+          }
 
-        if (data) {
-          // Merge remote data with local data (remote wins)
-          set({
-            userName: data.full_name || state.userName,
-            completedLessons: data.completed_lessons || state.completedLessons,
-            totalXP: data.total_xp || state.totalXP,
-            currentLevel: data.current_jilid || state.currentLevel,
-            streakDays: data.streak_days !== undefined && data.streak_days !== null ? data.streak_days : state.streakDays,
-          })
-        } else {
-          // If profile doesn't exist yet, push local progress
-          await supabase.from('profiles').insert({
-            id: state.userId,
-            completed_lessons: state.completedLessons,
-            total_xp: state.totalXP,
-            current_jilid: state.currentLevel,
-            streak_days: state.streakDays,
-            updated_at: new Date().toISOString()
-          })
+          if (data) {
+            set({
+              userName: data.full_name || state.userName,
+              completedLessons: data.completed_lessons || state.completedLessons,
+              totalXP: data.total_xp || state.totalXP,
+              currentLevel: data.current_jilid || state.currentLevel,
+              streakDays: data.streak_days !== undefined && data.streak_days !== null ? data.streak_days : state.streakDays,
+              lastSynced: new Date().toISOString()
+            })
+          } else {
+            const { error: insertError } = await supabase.from('profiles').insert({
+              id: state.userId,
+              completed_lessons: state.completedLessons,
+              total_xp: state.totalXP,
+              current_jilid: state.currentLevel,
+              streak_days: state.streakDays,
+              updated_at: new Date().toISOString()
+            })
+            if (insertError) throw insertError
+            set({ lastSynced: new Date().toISOString() })
+          }
+        } catch (err) {
+          console.error('Sync Error:', err)
+        } finally {
+          set({ isSyncing: false })
         }
       },
     }),

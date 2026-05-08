@@ -266,7 +266,7 @@ export default function TermsPage() {
             <div className="font-bold text-white tracking-tight">Qur&apos;an Flow</div>
           </div>
           <div className="text-xs sm:text-sm font-medium text-[#94A3B8]">
-            © {new Date().getFullYear()} Di buat oleh24 Learning Centre — Dokumen ini berlaku sejak 25 April 2026
+            © {new Date().getFullYear()} Di buat oleh 24 Learning Centre — Dokumen ini berlaku sejak 25 April 2026
           </div>
           <div className="flex gap-4 text-sm">
             <Link href="/" className="text-[#94A3B8] hover:text-white transition-colors">Beranda</Link>
