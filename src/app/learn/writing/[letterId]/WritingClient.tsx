@@ -13,8 +13,8 @@ interface Point {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function calcAccuracy(userCanvas: HTMLCanvasElement, letter: any): number {
-  if (!letter || !letter.guidePath) return 0
+function calcAccuracy(userCanvas: HTMLCanvasElement, guidePath: string | undefined): number {
+  if (!guidePath) return 0
   const w = userCanvas.width
   const h = userCanvas.height
   const userCtx = userCanvas.getContext('2d')
@@ -31,7 +31,7 @@ function calcAccuracy(userCanvas: HTMLCanvasElement, letter: any): number {
   skeletonCtx.strokeStyle = 'black'
   const scale = w / 200
   skeletonCtx.scale(scale, scale)
-  skeletonCtx.stroke(new Path2D(letter.guidePath))
+  skeletonCtx.stroke(new Path2D(guidePath))
   const skeletonData = skeletonCtx.getImageData(0, 0, w, h).data
   const zoneCanvas = document.createElement('canvas')
   zoneCanvas.width = w
@@ -43,7 +43,7 @@ function calcAccuracy(userCanvas: HTMLCanvasElement, letter: any): number {
   zoneCtx.lineJoin = 'round'
   zoneCtx.strokeStyle = 'black'
   zoneCtx.scale(scale, scale)
-  zoneCtx.stroke(new Path2D(letter.guidePath))
+  zoneCtx.stroke(new Path2D(guidePath))
   const zoneData = zoneCtx.getImageData(0, 0, w, h).data
   let totalUser = 0
   let userInZone = 0
@@ -85,6 +85,7 @@ export default function WritingClient({
   const [showCelebration, setShowCelebration] = useState(false)
   const [strokeWidth, setStrokeWidth] = useState(12)
   const [showGuide, setShowGuide] = useState(true)
+  const [activeForm, setActiveForm] = useState<'isolated' | 'initial' | 'medial' | 'final'>('isolated')
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const guideCanvasRef = useRef<HTMLCanvasElement>(null)
@@ -115,15 +116,16 @@ export default function WritingClient({
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillStyle = showGuide ? 'rgba(59, 130, 246, 0.08)' : 'transparent'
-    ctx.fillText(letter.letter, canvas.width / 2, canvas.height / 2)
+    ctx.fillText(letter.positionForms[activeForm]?.char || letter.letter, canvas.width / 2, canvas.height / 2)
     ctx.restore()
-    if (showGuide && letter.guidePath) {
+    const currentGuidePath = letter?.positionForms[activeForm]?.guidePath;
+    if (showGuide && currentGuidePath) {
       ctx.save()
       ctx.strokeStyle = 'rgba(245, 158, 11, 0.3)'
       ctx.lineWidth = 3
       ctx.setLineDash([8, 6])
       ctx.lineCap = 'round'
-      const path = new Path2D(letter.guidePath)
+      const path = new Path2D(currentGuidePath)
       const scale = canvas.width / 200
       ctx.scale(scale, scale)
       ctx.stroke(path)
@@ -141,11 +143,11 @@ export default function WritingClient({
       ctx.fillText('▶ Start', canvas.width * 0.65, canvas.height * 0.35 - 16)
       ctx.restore()
     }
-  }, [letter, showGuide])
+  }, [letter, showGuide, activeForm])
 
   useEffect(() => {
     drawGuide()
-  }, [drawGuide])
+  }, [drawGuide, activeForm])
 
   const redrawCanvas = useCallback(() => {
     const canvas = canvasRef.current
@@ -230,7 +232,7 @@ export default function WritingClient({
   const handleCheck = () => {
     const userCanvas = canvasRef.current
     if (!userCanvas || !letter) return
-    const score = calcAccuracy(userCanvas, letter)
+    const score = calcAccuracy(userCanvas, letter.positionForms[activeForm].guidePath)
     setAccuracy(score)
     addSessionAccuracy(score)
     if (score >= 30) {
@@ -289,7 +291,7 @@ export default function WritingClient({
             <div className="bento-card p-8 text-center relative overflow-hidden">
               <div className="absolute top-0 right-0 p-8 text-7xl font-arabic text-[#334155]/50 -rotate-12 pointer-events-none">{letter?.letter}</div>
               <div className="text-[10px] font-extrabold tracking-widest text-[#F59E0B] mb-4 uppercase">Identitas Huruf</div>
-              <div className="font-arabic text-9xl text-[#3B82F6] mb-4 leading-none py-4">{letter?.letter || ''}</div>
+              <div className="font-arabic text-9xl text-[#3B82F6] mb-4 leading-none py-4">{letter?.positionForms[activeForm]?.char || letter?.letter || ''}</div>
               <h1 className="text-3xl font-extrabold text-white tracking-tight">{letter?.name}</h1>
               <p className="text-[#94A3B8] font-bold mt-1 uppercase tracking-widest">/{letter?.transliteration}/</p>
               {isCompleted && (
@@ -302,15 +304,19 @@ export default function WritingClient({
               <h3 className="text-xs font-extrabold uppercase tracking-widest text-[#94A3B8] mb-5 text-center">Bentuk Transformasi</h3>
               <div className="grid grid-cols-4 gap-3">
                 {letter && [
-                  { label: 'Tunggal', char: letter.isolated },
-                  { label: 'Awal', char: letter.initial },
-                  { label: 'Tengah', char: letter.medial },
-                  { label: 'Akhir', char: letter.final },
+                  { id: 'isolated', label: 'Tunggal', char: letter.positionForms.isolated.char },
+                  { id: 'initial', label: 'Awal', char: letter.positionForms.initial.char },
+                  { id: 'medial', label: 'Tengah', char: letter.positionForms.medial.char },
+                  { id: 'final', label: 'Akhir', char: letter.positionForms.final.char },
                 ].map((p) => (
-                  <div key={p.label} className="bg-[#0F172A] rounded-2xl p-4 text-center border border-[#334155]">
-                    <div className="font-arabic text-2xl text-[#3B82F6] mb-2">{p.char}</div>
-                    <div className="text-[10px] uppercase font-bold tracking-widest text-[#94A3B8]">{p.label}</div>
-                  </div>
+                  <button 
+                    key={p.id} 
+                    onClick={() => { setActiveForm(p.id as any); handleClear(); }}
+                    className={`rounded-2xl p-4 text-center border transition-all ${activeForm === p.id ? 'bg-[#3B82F6]/10 border-[#3B82F6] shadow-md shadow-[#3B82F6]/20' : 'bg-[#0F172A] border-[#334155] hover:border-[#475569]'}`}
+                  >
+                    <div className={`font-arabic text-2xl mb-2 ${activeForm === p.id ? 'text-[#3B82F6]' : 'text-[#94A3B8]'}`}>{p.char}</div>
+                    <div className={`text-[10px] uppercase font-bold tracking-widest ${activeForm === p.id ? 'text-[#3B82F6]' : 'text-[#94A3B8]'}`}>{p.label}</div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -350,9 +356,17 @@ export default function WritingClient({
                 <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:24px_24px] opacity-30 pointer-events-none" />
                 <canvas ref={guideCanvasRef} width={500} height={500} className="absolute inset-0 w-full h-full" />
                 <canvas ref={canvasRef} width={500} height={500} className="absolute inset-0 w-full h-full touch-none cursor-crosshair z-10" onPointerDown={startDrawing} onPointerMove={draw} onPointerUp={stopDrawing} onPointerCancel={stopDrawing} onPointerOut={stopDrawing} />
-                {paths.length === 0 && currentPath.length === 0 && (
+                {paths.length === 0 && currentPath.length === 0 && letter?.positionForms[activeForm]?.guidePath && (
                   <div className="absolute inset-x-0 bottom-8 flex justify-center pointer-events-none z-0">
                     <p className="text-[11px] font-bold uppercase tracking-widest text-white bg-[#0F172A]/90 backdrop-blur border border-[#334155] px-6 py-2 rounded-full shadow-sm">Mulai goresan dari titik oranye</p>
+                  </div>
+                )}
+                {(!letter?.positionForms[activeForm]?.guidePath) && (
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center pointer-events-none z-20">
+                    <p className="text-[13px] font-bold text-[#F59E0B] bg-[#0F172A]/90 backdrop-blur border border-[#F59E0B]/50 px-6 py-3 rounded-2xl shadow-lg text-center mx-12">
+                      Guide Path Belum Tersedia<br/>
+                      <span className="text-[10px] text-[#94A3B8] font-normal tracking-wide mt-1 block">Silakan tambahkan melalui menu Admin Editor.</span>
+                    </p>
                   </div>
                 )}
               </div>

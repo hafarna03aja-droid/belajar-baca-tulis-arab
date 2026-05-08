@@ -34,10 +34,10 @@ export default function FormsClient({
   const isCompleted = letter ? isLessonCompleted(`${level}-${letter.id}`) : false
 
   const formOptions = [
-    { id: 'isolated', name: 'Tunggal', char: letter?.isolated },
-    { id: 'initial', name: 'Awal', char: letter?.initial },
-    { id: 'medial', name: 'Tengah', char: letter?.medial },
-    { id: 'final', name: 'Akhir', char: letter?.final },
+    { id: 'isolated', name: 'Tunggal', char: letter?.positionForms.isolated.char },
+    { id: 'initial', name: 'Awal', char: letter?.positionForms.initial.char },
+    { id: 'medial', name: 'Tengah', char: letter?.positionForms.medial.char },
+    { id: 'final', name: 'Akhir', char: letter?.positionForms.final.char },
   ]
 
   const currentForm = formOptions[activeForm] || formOptions[0]
@@ -222,7 +222,7 @@ export default function FormsClient({
             <div className="bento-card p-8 text-center relative overflow-hidden">
                <div className="absolute top-0 left-0 w-full h-1 bg-[#F59E0B]" />
               <div className="text-[10px] font-extrabold tracking-widest text-[#F59E0B] mb-4 uppercase">Identitas Huruf</div>
-              <div className="font-arabic text-8xl text-white mb-4 py-2">{letter?.isolated}</div>
+              <div className="font-arabic text-8xl text-white mb-4 py-2">{letter?.positionForms.isolated.char}</div>
               <h1 className="text-3xl font-extrabold text-white tracking-tight">{letter?.name}</h1>
               <p className="text-[#94A3B8] font-bold mt-1 uppercase tracking-widest">/{letter?.transliteration}/</p>
               {isCompleted && (

@@ -16,10 +16,12 @@ export interface HijaiyahLetter {
   withSukun: string;
   audioUrl?: string;
   // Position forms
-  isolated: string;
-  initial: string;
-  medial: string;
-  final: string;
+  positionForms: {
+    isolated: { char: string; guidePath: string; strokeCount: number };
+    initial: { char: string; guidePath: string; strokeCount: number };
+    medial: { char: string; guidePath: string; strokeCount: number };
+    final: { char: string; guidePath: string; strokeCount: number };
+  };
   canConnect: boolean;
 }
 
@@ -30,7 +32,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     guidePath: 'M 100 30 L 100 170',
     withFathah: 'اَ', withKasrah: 'اِ', withDhammah: 'اُ', withSukun: 'اْ',
     audioUrl: 'https://dvwxdbrwpwcnygjsdrkn.supabase.co/storage/v1/object/public/quran-audio/alif.mp3',
-    isolated: 'ا', initial: 'ا', medial: 'ا', final: 'ا',
+    positionForms: {
+      isolated: { char: 'ا', guidePath: 'M 100 30 L 100 170', strokeCount: 1 },
+      initial: { char: 'ا', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ا', guidePath: '', strokeCount: 0 },
+      final: { char: 'ا', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -38,7 +45,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 2, strokeCount: 2,
     guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110',
     withFathah: 'بَ', withKasrah: 'بِ', withDhammah: 'بُ', withSukun: 'بْ',
-    isolated: 'ب', initial: 'بـ', medial: 'ـبـ', final: 'ـب',
+    positionForms: {
+      isolated: { char: 'ب', guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110', strokeCount: 2 },
+      initial: { char: 'بـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـبـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـب', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -46,7 +58,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 3, strokeCount: 3,
     guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110',
     withFathah: 'تَ', withKasrah: 'تِ', withDhammah: 'تُ', withSukun: 'تْ',
-    isolated: 'ت', initial: 'تـ', medial: 'ـتـ', final: 'ـت',
+    positionForms: {
+      isolated: { char: 'ت', guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110', strokeCount: 3 },
+      initial: { char: 'تـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـتـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـت', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -54,7 +71,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 4, strokeCount: 4,
     guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110',
     withFathah: 'ثَ', withKasrah: 'ثِ', withDhammah: 'ثُ', withSukun: 'ثْ',
-    isolated: 'ث', initial: 'ثـ', medial: 'ـثـ', final: 'ـث',
+    positionForms: {
+      isolated: { char: 'ث', guidePath: 'M 160 100 Q 100 80 40 100 Q 100 130 160 110', strokeCount: 4 },
+      initial: { char: 'ثـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـثـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـث', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -62,7 +84,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 5, strokeCount: 2,
     guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100',
     withFathah: 'جَ', withKasrah: 'جِ', withDhammah: 'جُ', withSukun: 'جْ',
-    isolated: 'ج', initial: 'جـ', medial: 'ـجـ', final: 'ـج',
+    positionForms: {
+      isolated: { char: 'ج', guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100', strokeCount: 2 },
+      initial: { char: 'جـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـجـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـج', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -70,7 +97,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 6, strokeCount: 1,
     guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100',
     withFathah: 'حَ', withKasrah: 'حِ', withDhammah: 'حُ', withSukun: 'حْ',
-    isolated: 'ح', initial: 'حـ', medial: 'ـحـ', final: 'ـح',
+    positionForms: {
+      isolated: { char: 'ح', guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100', strokeCount: 1 },
+      initial: { char: 'حـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـحـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـح', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -78,7 +110,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 7, strokeCount: 2,
     guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100',
     withFathah: 'خَ', withKasrah: 'خِ', withDhammah: 'خُ', withSukun: 'خْ',
-    isolated: 'خ', initial: 'خـ', medial: 'ـخـ', final: 'ـخ',
+    positionForms: {
+      isolated: { char: 'خ', guidePath: 'M 120 60 Q 160 80 150 120 Q 140 160 80 150 Q 40 140 60 100', strokeCount: 2 },
+      initial: { char: 'خـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـخـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـخ', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -86,7 +123,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 8, strokeCount: 1,
     guidePath: 'M 150 80 Q 160 120 130 150 Q 100 160 80 140 L 40 140',
     withFathah: 'دَ', withKasrah: 'دِ', withDhammah: 'دُ', withSukun: 'دْ',
-    isolated: 'د', initial: 'د', medial: 'ـد', final: 'ـد',
+    positionForms: {
+      isolated: { char: 'د', guidePath: 'M 150 80 Q 160 120 130 150 Q 100 160 80 140 L 40 140', strokeCount: 1 },
+      initial: { char: 'د', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـد', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـد', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -94,7 +136,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 9, strokeCount: 2,
     guidePath: 'M 150 80 Q 160 120 130 150 Q 100 160 80 140 L 40 140',
     withFathah: 'ذَ', withKasrah: 'ذِ', withDhammah: 'ذُ', withSukun: 'ذْ',
-    isolated: 'ذ', initial: 'ذ', medial: 'ـذ', final: 'ـذ',
+    positionForms: {
+      isolated: { char: 'ذ', guidePath: 'M 150 80 Q 160 120 130 150 Q 100 160 80 140 L 40 140', strokeCount: 2 },
+      initial: { char: 'ذ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـذ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـذ', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -102,7 +149,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 10, strokeCount: 1,
     guidePath: 'M 130 60 Q 160 100 140 150 Q 120 170 80 160',
     withFathah: 'رَ', withKasrah: 'رِ', withDhammah: 'رُ', withSukun: 'رْ',
-    isolated: 'ر', initial: 'ر', medial: 'ـر', final: 'ـر',
+    positionForms: {
+      isolated: { char: 'ر', guidePath: 'M 130 60 Q 160 100 140 150 Q 120 170 80 160', strokeCount: 1 },
+      initial: { char: 'ر', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـر', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـر', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -110,7 +162,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 11, strokeCount: 2,
     guidePath: 'M 130 60 Q 160 100 140 150 Q 120 170 80 160',
     withFathah: 'زَ', withKasrah: 'زِ', withDhammah: 'زُ', withSukun: 'زْ',
-    isolated: 'ز', initial: 'ز', medial: 'ـز', final: 'ـز',
+    positionForms: {
+      isolated: { char: 'ز', guidePath: 'M 130 60 Q 160 100 140 150 Q 120 170 80 160', strokeCount: 2 },
+      initial: { char: 'ز', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـز', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـز', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -118,7 +175,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 12, strokeCount: 1,
     guidePath: 'M 170 110 Q 140 90 110 110 Q 90 125 70 110 Q 50 95 30 110',
     withFathah: 'سَ', withKasrah: 'سِ', withDhammah: 'سُ', withSukun: 'سْ',
-    isolated: 'س', initial: 'سـ', medial: 'ـسـ', final: 'ـس',
+    positionForms: {
+      isolated: { char: 'س', guidePath: 'M 170 110 Q 140 90 110 110 Q 90 125 70 110 Q 50 95 30 110', strokeCount: 1 },
+      initial: { char: 'سـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـسـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـس', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -126,7 +188,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 13, strokeCount: 4,
     guidePath: 'M 170 110 Q 140 90 110 110 Q 90 125 70 110 Q 50 95 30 110',
     withFathah: 'شَ', withKasrah: 'شِ', withDhammah: 'شُ', withSukun: 'شْ',
-    isolated: 'ش', initial: 'شـ', medial: 'ـشـ', final: 'ـش',
+    positionForms: {
+      isolated: { char: 'ش', guidePath: 'M 170 110 Q 140 90 110 110 Q 90 125 70 110 Q 50 95 30 110', strokeCount: 4 },
+      initial: { char: 'شـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـشـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـش', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -134,7 +201,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 14, strokeCount: 2,
     guidePath: 'M 150 90 Q 100 60 60 90 Q 30 110 60 130 Q 100 150 150 130 L 170 130',
     withFathah: 'صَ', withKasrah: 'صِ', withDhammah: 'صُ', withSukun: 'صْ',
-    isolated: 'ص', initial: 'صـ', medial: 'ـصـ', final: 'ـص',
+    positionForms: {
+      isolated: { char: 'ص', guidePath: 'M 150 90 Q 100 60 60 90 Q 30 110 60 130 Q 100 150 150 130 L 170 130', strokeCount: 2 },
+      initial: { char: 'صـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـصـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـص', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -142,7 +214,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 15, strokeCount: 3,
     guidePath: 'M 150 90 Q 100 60 60 90 Q 30 110 60 130 Q 100 150 150 130 L 170 130',
     withFathah: 'ضَ', withKasrah: 'ضِ', withDhammah: 'ضُ', withSukun: 'ضْ',
-    isolated: 'ض', initial: 'ضـ', medial: 'ـضـ', final: 'ـض',
+    positionForms: {
+      isolated: { char: 'ض', guidePath: 'M 150 90 Q 100 60 60 90 Q 30 110 60 130 Q 100 150 150 130 L 170 130', strokeCount: 3 },
+      initial: { char: 'ضـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـضـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـض', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -150,7 +227,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 16, strokeCount: 2,
     guidePath: 'M 80 60 L 80 150 Q 80 170 100 170 Q 140 170 160 150 Q 170 130 150 110',
     withFathah: 'طَ', withKasrah: 'طِ', withDhammah: 'طُ', withSukun: 'طْ',
-    isolated: 'ط', initial: 'طـ', medial: 'ـطـ', final: 'ـط',
+    positionForms: {
+      isolated: { char: 'ط', guidePath: 'M 80 60 L 80 150 Q 80 170 100 170 Q 140 170 160 150 Q 170 130 150 110', strokeCount: 2 },
+      initial: { char: 'طـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـطـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـط', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -158,7 +240,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 17, strokeCount: 3,
     guidePath: 'M 80 60 L 80 150 Q 80 170 100 170 Q 140 170 160 150 Q 170 130 150 110',
     withFathah: 'ظَ', withKasrah: 'ظِ', withDhammah: 'ظُ', withSukun: 'ظْ',
-    isolated: 'ظ', initial: 'ظـ', medial: 'ـظـ', final: 'ـظ',
+    positionForms: {
+      isolated: { char: 'ظ', guidePath: 'M 80 60 L 80 150 Q 80 170 100 170 Q 140 170 160 150 Q 170 130 150 110', strokeCount: 3 },
+      initial: { char: 'ظـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـظـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـظ', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -166,7 +253,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 18, strokeCount: 2,
     guidePath: 'M 140 80 Q 170 100 160 130 Q 150 160 120 160 Q 80 155 60 130 Q 40 100 70 80 Q 100 65 140 80',
     withFathah: 'عَ', withKasrah: 'عِ', withDhammah: 'عُ', withSukun: 'عْ',
-    isolated: 'ع', initial: 'عـ', medial: 'ـعـ', final: 'ـع',
+    positionForms: {
+      isolated: { char: 'ع', guidePath: 'M 140 80 Q 170 100 160 130 Q 150 160 120 160 Q 80 155 60 130 Q 40 100 70 80 Q 100 65 140 80', strokeCount: 2 },
+      initial: { char: 'عـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـعـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـع', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -174,7 +266,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 19, strokeCount: 3,
     guidePath: 'M 140 80 Q 170 100 160 130 Q 150 160 120 160 Q 80 155 60 130 Q 40 100 70 80 Q 100 65 140 80',
     withFathah: 'غَ', withKasrah: 'غِ', withDhammah: 'غُ', withSukun: 'غْ',
-    isolated: 'غ', initial: 'غـ', medial: 'ـغـ', final: 'ـغ',
+    positionForms: {
+      isolated: { char: 'غ', guidePath: 'M 140 80 Q 170 100 160 130 Q 150 160 120 160 Q 80 155 60 130 Q 40 100 70 80 Q 100 65 140 80', strokeCount: 3 },
+      initial: { char: 'غـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـغـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـغ', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -182,7 +279,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 20, strokeCount: 2,
     guidePath: 'M 160 100 Q 130 70 90 85 Q 60 100 80 120 Q 100 140 160 130',
     withFathah: 'فَ', withKasrah: 'فِ', withDhammah: 'فُ', withSukun: 'فْ',
-    isolated: 'ف', initial: 'فـ', medial: 'ـفـ', final: 'ـف',
+    positionForms: {
+      isolated: { char: 'ف', guidePath: 'M 160 100 Q 130 70 90 85 Q 60 100 80 120 Q 100 140 160 130', strokeCount: 2 },
+      initial: { char: 'فـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـفـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـف', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -190,7 +292,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 21, strokeCount: 3,
     guidePath: 'M 150 80 Q 100 50 60 80 Q 30 110 60 140 Q 100 160 150 140 Q 170 120 160 100',
     withFathah: 'قَ', withKasrah: 'قِ', withDhammah: 'قُ', withSukun: 'قْ',
-    isolated: 'ق', initial: 'قـ', medial: 'ـقـ', final: 'ـق',
+    positionForms: {
+      isolated: { char: 'ق', guidePath: 'M 150 80 Q 100 50 60 80 Q 30 110 60 140 Q 100 160 150 140 Q 170 120 160 100', strokeCount: 3 },
+      initial: { char: 'قـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـقـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـق', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -198,7 +305,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 22, strokeCount: 3,
     guidePath: 'M 150 50 L 150 170 M 150 100 Q 120 80 80 100',
     withFathah: 'كَ', withKasrah: 'كِ', withDhammah: 'كُ', withSukun: 'كْ',
-    isolated: 'ك', initial: 'كـ', medial: 'ـكـ', final: 'ـك',
+    positionForms: {
+      isolated: { char: 'ك', guidePath: 'M 150 50 L 150 170 M 150 100 Q 120 80 80 100', strokeCount: 3 },
+      initial: { char: 'كـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـكـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـك', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -206,7 +318,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 23, strokeCount: 1,
     guidePath: 'M 120 30 Q 120 120 80 160 Q 60 170 40 160',
     withFathah: 'لَ', withKasrah: 'لِ', withDhammah: 'لُ', withSukun: 'لْ',
-    isolated: 'ل', initial: 'لـ', medial: 'ـلـ', final: 'ـل',
+    positionForms: {
+      isolated: { char: 'ل', guidePath: 'M 120 30 Q 120 120 80 160 Q 60 170 40 160', strokeCount: 1 },
+      initial: { char: 'لـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـلـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـل', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -214,7 +331,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 24, strokeCount: 2,
     guidePath: 'M 100 80 Q 130 60 150 80 Q 160 100 140 120 Q 120 135 100 120 Q 70 105 60 80',
     withFathah: 'مَ', withKasrah: 'مِ', withDhammah: 'مُ', withSukun: 'مْ',
-    isolated: 'م', initial: 'مـ', medial: 'ـمـ', final: 'ـم',
+    positionForms: {
+      isolated: { char: 'م', guidePath: 'M 100 80 Q 130 60 150 80 Q 160 100 140 120 Q 120 135 100 120 Q 70 105 60 80', strokeCount: 2 },
+      initial: { char: 'مـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـمـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـم', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -222,7 +344,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 25, strokeCount: 2,
     guidePath: 'M 60 100 Q 100 70 140 100 Q 160 120 140 140 Q 100 160 60 140',
     withFathah: 'نَ', withKasrah: 'نِ', withDhammah: 'نُ', withSukun: 'نْ',
-    isolated: 'ن', initial: 'نـ', medial: 'ـنـ', final: 'ـن',
+    positionForms: {
+      isolated: { char: 'ن', guidePath: 'M 60 100 Q 100 70 140 100 Q 160 120 140 140 Q 100 160 60 140', strokeCount: 2 },
+      initial: { char: 'نـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـنـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـن', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -230,7 +357,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 26, strokeCount: 2,
     guidePath: 'M 130 70 Q 160 90 150 120 Q 135 150 110 155 Q 80 155 65 135',
     withFathah: 'وَ', withKasrah: 'وِ', withDhammah: 'وُ', withSukun: 'وْ',
-    isolated: 'و', initial: 'و', medial: 'ـو', final: 'ـو',
+    positionForms: {
+      isolated: { char: 'و', guidePath: 'M 130 70 Q 160 90 150 120 Q 135 150 110 155 Q 80 155 65 135', strokeCount: 2 },
+      initial: { char: 'و', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـو', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـو', guidePath: '', strokeCount: 0 }
+    },
     canConnect: false
   },
   {
@@ -238,7 +370,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 27, strokeCount: 3,
     guidePath: 'M 100 80 Q 140 60 160 90 Q 160 110 140 110 Q 100 110 80 120 Q 60 130 70 150 Q 90 170 120 160',
     withFathah: 'هَ', withKasrah: 'هِ', withDhammah: 'هُ', withSukun: 'هْ',
-    isolated: 'ه', initial: 'هـ', medial: 'ـهـ', final: 'ـه',
+    positionForms: {
+      isolated: { char: 'ه', guidePath: 'M 100 80 Q 140 60 160 90 Q 160 110 140 110 Q 100 110 80 120 Q 60 130 70 150 Q 90 170 120 160', strokeCount: 3 },
+      initial: { char: 'هـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـهـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـه', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
   {
@@ -246,7 +383,12 @@ export const HIJAIYAH_LETTERS: HijaiyahLetter[] = [
     order: 28, strokeCount: 3,
     guidePath: 'M 160 90 Q 110 70 70 90 Q 40 110 60 140 Q 90 170 130 160',
     withFathah: 'يَ', withKasrah: 'يِ', withDhammah: 'يُ', withSukun: 'يْ',
-    isolated: 'ي', initial: 'يـ', medial: 'ـيـ', final: 'ـي',
+    positionForms: {
+      isolated: { char: 'ي', guidePath: 'M 160 90 Q 110 70 70 90 Q 40 110 60 140 Q 90 170 130 160', strokeCount: 3 },
+      initial: { char: 'يـ', guidePath: '', strokeCount: 0 },
+      medial: { char: 'ـيـ', guidePath: '', strokeCount: 0 },
+      final: { char: 'ـي', guidePath: '', strokeCount: 0 }
+    },
     canConnect: true
   },
 ];

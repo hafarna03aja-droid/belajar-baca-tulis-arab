@@ -86,11 +86,15 @@ export const useLearningStore = create<LearningStore>()(
         // Sync with Supabase if logged in
         if (state.userId) {
           const supabase = createClient()
+          const latestState = get() // Ambil state terbaru setelah updateStreak dipanggil
+
           supabase.from('profiles').upsert({
             id: state.userId,
             completed_lessons: newCompleted,
             total_xp: state.totalXP + xpGained,
             current_jilid: newLevel,
+            streak_days: latestState.streakDays,
+            updated_at: new Date().toISOString()
           }).then(({ error }) => {
             if (error) console.error('Error syncing to Supabase:', error)
           })
@@ -178,7 +182,7 @@ export const useLearningStore = create<LearningStore>()(
         const supabase = createClient()
         const { data, error } = await supabase
           .from('profiles')
-          .select('full_name, completed_lessons, total_xp, current_jilid')
+          .select('full_name, completed_lessons, total_xp, current_jilid, streak_days')
           .eq('id', state.userId)
           .single()
 
@@ -194,6 +198,7 @@ export const useLearningStore = create<LearningStore>()(
             completedLessons: data.completed_lessons || state.completedLessons,
             totalXP: data.total_xp || state.totalXP,
             currentLevel: data.current_jilid || state.currentLevel,
+            streakDays: data.streak_days !== undefined && data.streak_days !== null ? data.streak_days : state.streakDays,
           })
         } else {
           // If profile doesn't exist yet, push local progress
@@ -202,6 +207,8 @@ export const useLearningStore = create<LearningStore>()(
             completed_lessons: state.completedLessons,
             total_xp: state.totalXP,
             current_jilid: state.currentLevel,
+            streak_days: state.streakDays,
+            updated_at: new Date().toISOString()
           })
         }
       },
