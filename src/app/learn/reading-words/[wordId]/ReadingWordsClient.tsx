@@ -38,7 +38,12 @@ export default function ReadingWordsClient({
       audioRef.current.pause()
       audioRef.current.currentTime = 0
     }
-    const cleanName = wordData.transliteration.toLowerCase().replace(/\s+/g, '-')
+    const cleanName = wordData.transliteration
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
     const audioUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/quran-audio/iqro/${cleanName}.mp3`
     const audio = new Audio(audioUrl)
     audioRef.current = audio
