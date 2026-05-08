@@ -34,7 +34,7 @@ const VALIDATION_PROCESS = [
     step: '03',
     icon: '🎙️',
     title: 'Rekaman Profesional',
-    desc: 'Audio direkam oleh Qari bersertifikat di studio standar broadcasting dengan peralatan audio hi-res (sample rate ≥ 48kHz).',
+    desc: 'Audio direkam secara profesional untuk memastikan kejelasan makhraj dan kualitas suara yang baik.',
     color: '#F59E0B',
   },
   {
@@ -101,12 +101,12 @@ export default function ValidationPage() {
             <span className="text-gradient-vibrant">Para Ustadz</span>
           </h1>
           <p className="text-[#94A3B8] text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            Kepercayaan Anda adalah amanah kami. Setiap konten makhraj dan kurikulum di Qur&apos;an Flow telah melalui proses validasi berlapis oleh panel ustadz dan Qari nasional berpengalaman.
+            Kepercayaan Anda adalah amanah kami. Setiap konten makhraj dan kurikulum di Qur&apos;an Flow telah melalui proses validasi berlapis oleh panel ustadz berpengalaman.
           </p>
 
           {/* Trust badges */}
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {['✅ Audio Tervalidasi Ustadz', '📜 Referensi Kitab Klasik', '🏆 Qari Bersertifikat', '🔄 Audit 6 Bulanan'].map((badge) => (
+            {['✅ Audio Tervalidasi Ustadz', '📜 Referensi Kitab Klasik', '🔄 Audit Berkala'].map((badge) => (
               <span key={badge} className="text-xs text-white/70 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 font-medium">
                 {badge}
               </span>
@@ -121,7 +121,7 @@ export default function ValidationPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Panel Ustadz &amp; Konsultan</h2>
             <p className="text-[#94A3B8] text-base max-w-xl mx-auto">
-              Tim validasi kami terdiri dari para ahli tajwid, Qari, dan akademisi pendidikan Islam dari institusi-institusi terpercaya.
+              Tim validasi kami terdiri dari para ustadz dan pengajar tajwid yang berpengalaman.
             </p>
           </div>
 
