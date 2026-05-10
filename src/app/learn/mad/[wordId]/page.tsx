@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { HIJAIYAH_WORDS } from '@/lib/words-data'
 import MadClient from './MadClient'
 
@@ -11,5 +12,9 @@ export async function generateStaticParams() {
 }
 
 export default function MadPage({ params }: { params: Promise<{ wordId: string }> }) {
-  return <MadClient params={params} />
+  return (
+    <Suspense fallback={null}>
+      <MadClient params={params} />
+    </Suspense>
+  )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { HIJAIYAH_WORDS } from '@/lib/words-data'
@@ -12,7 +12,7 @@ export default function ReadingWordsClient({
 }: {
   params: Promise<{ wordId: string }>
 }) {
-  const [wordId, setWordId] = useState<string>('')
+  const { wordId } = use(params)
   const [isPlaying, setIsPlaying] = useState(false)
   const [revealed, setRevealed] = useState(false)
   const [quizMode, setQuizMode] = useState(false)
@@ -25,10 +25,6 @@ export default function ReadingWordsClient({
   const { completeLesson, isLessonCompleted } = useLearningStore()
   const searchParams = useSearchParams()
   const level = parseInt(searchParams.get('level') || '5', 10)
-
-  useEffect(() => {
-    params.then((p) => setWordId(p.wordId))
-  }, [params])
 
   const wordData = HIJAIYAH_WORDS.find((w) => w.id === wordId)
   const currentIndex = HIJAIYAH_WORDS.findIndex((w) => w.id === wordId)

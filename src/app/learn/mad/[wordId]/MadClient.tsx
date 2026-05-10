@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { HIJAIYAH_WORDS } from '@/lib/words-data'
@@ -12,7 +12,7 @@ export default function MadClient({
 }: {
   params: Promise<{ wordId: string }>
 }) {
-  const [wordId, setWordId] = useState<string>('')
+  const { wordId } = use(params)
   const [isPlaying, setIsPlaying] = useState(false)
   const [revealed, setRevealed] = useState(false)
   const [quizMode, setQuizMode] = useState(false)
@@ -22,10 +22,6 @@ export default function MadClient({
   const { completeLesson, isLessonCompleted } = useLearningStore()
   const searchParams = useSearchParams()
   const level = 4
-
-  useEffect(() => {
-    params.then((p) => setWordId(p.wordId))
-  }, [params])
 
   const madWords = HIJAIYAH_WORDS.filter(
     (w) => w.category === 'Mad Ashli' || w.category === 'Mad Far\'i'
