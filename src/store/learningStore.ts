@@ -22,6 +22,7 @@ interface LearningStore {
   userName: string | null
   isSyncing: boolean
   lastSynced: string | null
+  theme: 'dark' | 'light'
 
   // Current session
   currentLetterIndex: number
@@ -39,6 +40,7 @@ interface LearningStore {
   setUserId: (id: string | null) => void
   setUserName: (name: string | null) => void
   syncWithSupabase: () => Promise<void>
+  toggleTheme: () => void
 }
 
 export const useLearningStore = create<LearningStore>()(
@@ -53,8 +55,17 @@ export const useLearningStore = create<LearningStore>()(
       userName: null,
       isSyncing: false,
       lastSynced: null,
+      theme: 'dark',
       currentLetterIndex: 0,
       sessionAccuracy: [],
+
+      toggleTheme: () => {
+        const newTheme = get().theme === 'dark' ? 'light' : 'dark'
+        set({ theme: newTheme })
+        if (typeof document !== 'undefined') {
+          document.documentElement.setAttribute('data-theme', newTheme)
+        }
+      },
 
       completeLesson: (lessonId, score) => {
         const state = get()
@@ -109,35 +120,47 @@ export const useLearningStore = create<LearningStore>()(
 
       forceUnlockAll: () => {
          const allLessons: Record<string, LessonProgress> = {}
-         // Auto-complete all lessons for 6 levels
-         ;[1, 2, 3, 4].forEach(levelId => {
-           HIJAIYAH_LETTERS.forEach(l => {
-               const id = `${levelId}-${l.id}`
-               allLessons[id] = {
-                   lessonId: id,
-                   completed: true,
-                   accuracyScore: 90,
-                   completedAt: new Date().toISOString()
-               }
-           })
-         })
-         ;[5, 6].forEach(levelId => {
-           HIJAIYAH_WORDS.forEach(w => {
-               const id = `${levelId}-${w.id}`
-               allLessons[id] = {
-                   lessonId: id,
-                   completed: true,
-                   accuracyScore: 90,
-                   completedAt: new Date().toISOString()
-               }
-           })
-         })
-         set({
-            currentLevel: 7,
-            totalXP: 9999,
-            streakDays: 30,
-            completedLessons: allLessons
-         })
+          // Auto-complete all lessons for 4 levels (Letters)
+          ;[1, 2, 3].forEach(levelId => {
+            HIJAIYAH_LETTERS.forEach(l => {
+                const id = `${levelId}-${l.id}`
+                allLessons[id] = {
+                    lessonId: id,
+                    completed: true,
+                    accuracyScore: 90,
+                    completedAt: new Date().toISOString()
+                }
+            })
+          })
+          // Auto-complete Level 4 (Mad Words)
+          const madWords = HIJAIYAH_WORDS.filter(w => w.category === 'Mad Ashli' || w.category === 'Mad Far\'i')
+          madWords.forEach(w => {
+              const id = `4-${w.id}`
+              allLessons[id] = {
+                  lessonId: id,
+                  completed: true,
+                  accuracyScore: 90,
+                  completedAt: new Date().toISOString()
+              }
+          })
+          // Auto-complete Level 5 & 6 (All Words)
+          ;[5, 6].forEach(levelId => {
+            HIJAIYAH_WORDS.forEach(w => {
+                const id = `${levelId}-${w.id}`
+                allLessons[id] = {
+                    lessonId: id,
+                    completed: true,
+                    accuracyScore: 90,
+                    completedAt: new Date().toISOString()
+                }
+            })
+          })
+          set({
+             currentLevel: 7,
+             totalXP: 9999,
+             streakDays: 30,
+             completedLessons: allLessons
+          })
       },
 
       setCurrentLetterIndex: (index) => set({ currentLetterIndex: index }),

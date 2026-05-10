@@ -15,6 +15,11 @@ export default function ReadingWordsClient({
   const [wordId, setWordId] = useState<string>('')
   const [isPlaying, setIsPlaying] = useState(false)
   const [revealed, setRevealed] = useState(false)
+  const [quizMode, setQuizMode] = useState(false)
+  const [quizAnswer, setQuizAnswer] = useState<string | null>(null)
+  const [quizChoices, setQuizChoices] = useState<string[]>([])
+  const [quizType, setQuizType] = useState<'transliteration' | 'meaning'>('transliteration')
+  const [score, setScore] = useState({ correct: 0, total: 0 })
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const { completeLesson, isLessonCompleted } = useLearningStore()
@@ -31,6 +36,24 @@ export default function ReadingWordsClient({
   const nextWord = currentIndex < HIJAIYAH_WORDS.length - 1 ? HIJAIYAH_WORDS[currentIndex + 1] : null
   const isCompleted = wordData ? isLessonCompleted(`${level}-${wordData.id}`) : false
 
+  // Generate quiz choices
+  useEffect(() => {
+    if (quizMode && wordData) {
+      const type = Math.random() > 0.5 ? 'transliteration' : 'meaning'
+      setQuizType(type)
+      
+      const correctOption = type === 'transliteration' ? wordData.transliteration : wordData.meaning
+      const others = HIJAIYAH_WORDS
+        .filter(w => w.id !== wordData.id)
+        .map(w => type === 'transliteration' ? w.transliteration : w.meaning)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+      
+      setQuizChoices([correctOption, ...others].sort(() => Math.random() - 0.5))
+      setQuizAnswer(null)
+    }
+  }, [quizMode, wordId, wordData])
+
   const handlePlay = () => {
     if (!wordData) return
     setIsPlaying(true)
@@ -38,19 +61,14 @@ export default function ReadingWordsClient({
       audioRef.current.pause()
       audioRef.current.currentTime = 0
     }
-    const cleanName = wordData.transliteration
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-    const audioUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/quran-audio/iqro/${cleanName}.mp3`
+    // Gunakan wordData.id langsung — sesuai nama file di Supabase Storage folder words/
+    const audioUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/quran-audio/words/${wordData.id}.mp3`
     const audio = new Audio(audioUrl)
     audioRef.current = audio
     audio.play().then(() => {
       audio.onended = () => setIsPlaying(false)
     }).catch((e) => {
-      console.log(`Audio custom belum ada untuk kata ${cleanName}, menggunakan TTS.`, e)
+      console.log(`Audio tidak ditemukan untuk ${wordData.transliteration}, menggunakan TTS.`, e)
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel()
         const utteranceText = wordData.word || wordData.transliteration
@@ -74,6 +92,18 @@ export default function ReadingWordsClient({
     }
   }
 
+  const handleQuizAnswer = (selected: string) => {
+    if (quizAnswer) return
+    setQuizAnswer(selected)
+    const isCorrect = selected === (quizType === 'transliteration' ? wordData?.transliteration : wordData?.meaning)
+    
+    if (isCorrect) {
+      setScore(s => ({ ...s, correct: s.correct + 1 }))
+      if (wordData) completeLesson(`${level}-${wordData.id}`, 100)
+    }
+    setScore(s => ({ ...s, total: s.total + 1 }))
+  }
+
   if (!wordData && wordId) {
     return (
       <div className="min-h-screen bg-[var(--color-bg)] flex items-center justify-center">
@@ -92,11 +122,37 @@ export default function ReadingWordsClient({
     <div className="min-h-screen bg-[var(--color-bg)] text-white">
       <Navbar />
       <div className="max-w-6xl mx-auto px-6 pt-32 pb-24">
-        <div className="flex items-center gap-2 text-[13px] font-bold tracking-wider uppercase text-[#CBD5E1] mb-8">
-          <Link href="/learn" className="hover:text-[#10B981] transition-colors">Peta Rute</Link>
-          <span>›</span>
-          <span className="text-[#10B981]">Membaca Kata: {wordData?.transliteration || '...'}</span>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-2 text-[13px] font-bold tracking-wider uppercase text-[#CBD5E1]">
+            <Link href="/learn" className="hover:text-[#10B981] transition-colors">Peta Rute</Link>
+            <span>›</span>
+            <span className="text-[#10B981]">Membaca Kata: {wordData?.transliteration || '...'}</span>
+          </div>
+          
+          {quizMode && (
+            <div className="flex items-center gap-3 px-4 py-1.5 bg-[#1E293B] rounded-full border border-[#334155]">
+              <span className="text-[10px] font-extrabold text-[#94A3B8] uppercase tracking-widest">Skor</span>
+              <span className="text-sm font-black text-[#10B981]">{score.correct}/{score.total}</span>
+            </div>
+          )}
         </div>
+
+        {/* Mode Toggle */}
+        <div className="flex gap-4 mb-8 bg-[#1E293B] p-1 rounded-2xl w-fit border border-[#334155]">
+          <button
+            onClick={() => setQuizMode(false)}
+            className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${!quizMode ? 'bg-[#10B981] text-white shadow-lg' : 'text-[#94A3B8] hover:bg-white/5'}`}
+          >
+            📖 Belajar
+          </button>
+          <button
+            onClick={() => setQuizMode(true)}
+            className={`px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${quizMode ? 'bg-[#10B981] text-white shadow-lg' : 'text-[#94A3B8] hover:bg-white/5'}`}
+          >
+            🎯 Kuis
+          </button>
+        </div>
+
         <div className="grid lg:grid-cols-5 gap-8">
           <div className="lg:col-span-3 flex flex-col gap-8 animate-fade-in">
             <div className="relative group cursor-pointer" onClick={handlePlay}>
@@ -109,7 +165,7 @@ export default function ReadingWordsClient({
                       <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#10B981]">Kosa Kata</div>
                       <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#3B82F6] bg-[#3B82F6]/10 px-2 rounded">{wordData?.category}</div>
                     </div>
-                    <div className="text-white font-bold text-lg">{wordData?.transliteration}</div>
+                    {!quizMode && <div className="text-white font-bold text-lg">{wordData?.transliteration}</div>}
                   </div>
                   <button className={`w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg ${isPlaying ? 'bg-[#10B981] text-white scale-110 shadow-[#10B981]/50' : 'bg-[#1E293B] text-[#10B981] border border-[#334155] hover:border-[#10B981] hover:scale-105'}`}>
                     {isPlaying ? (
@@ -126,19 +182,58 @@ export default function ReadingWordsClient({
                 <div className="relative z-10 py-8">
                   <div className="font-arabic text-center leading-tight mb-8 text-white transition-all duration-500 hover:scale-105 hover:text-[#10B981]" style={{ fontSize: '9rem' }}>{wordData?.word}</div>
                 </div>
+                
                 <div className="mt-8 border-t border-[#334155] pt-8 relative z-10">
-                  {!revealed ? (
-                    <button onClick={(e) => { e.stopPropagation(); handleReveal() }} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-widest text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/30 hover:bg-[#10B981] hover:text-white transition-all group">Buka Cara Baca & Arti <span className="group-hover:translate-y-1 transition-transform">↓</span></button>
+                  {!quizMode ? (
+                    !revealed ? (
+                      <button onClick={(e) => { e.stopPropagation(); handleReveal() }} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-widest text-[#10B981] bg-[#10B981]/10 border border-[#10B981]/30 hover:bg-[#10B981] hover:text-white transition-all group">Buka Cara Baca & Arti <span className="group-hover:translate-y-1 transition-transform">↓</span></button>
+                    ) : (
+                      <div className="animate-fade-in space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="bg-[#1E293B]/50 p-4 rounded-2xl border border-[#334155] text-left">
+                            <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#94A3B8] mb-1">Cara Membaca</div>
+                            <div className="text-2xl font-extrabold text-white tracking-tight text-[#10B981]">/{wordData?.transliteration}/</div>
+                          </div>
+                          <div className="bg-[#1E293B]/50 p-4 rounded-2xl border border-[#334155] text-left">
+                            <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#94A3B8] mb-1">Arti Kata</div>
+                            <div className="text-lg font-bold text-white">{wordData?.meaning}</div>
+                          </div>
+                        </div>
+                      </div>
+                    )
                   ) : (
-                    <div className="animate-fade-in space-y-4">
-                      <div>
-                        <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#94A3B8] mb-1">Cara Membaca</div>
-                        <div className="text-3xl font-extrabold text-white tracking-tight text-[#10B981]">/{wordData?.transliteration}/</div>
+                    <div className="space-y-6">
+                      <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] mb-4">
+                        PILIH {quizType === 'transliteration' ? 'CARA BACA' : 'ARTI'} YANG TEPAT
                       </div>
-                      <div>
-                        <div className="text-[11px] font-extrabold uppercase tracking-widest text-[#94A3B8] mb-1">Arti Kata</div>
-                        <div className="text-xl font-bold text-white">{wordData?.meaning}</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {quizChoices.map((choice) => {
+                          const isCorrect = choice === (quizType === 'transliteration' ? wordData?.transliteration : wordData?.meaning)
+                          return (
+                            <button
+                              key={choice}
+                              onClick={(e) => { e.stopPropagation(); handleQuizAnswer(choice) }}
+                              disabled={quizAnswer !== null}
+                              className={`py-4 px-6 rounded-2xl text-sm font-bold transition-all border-2 ${
+                                quizAnswer === null
+                                  ? 'bg-[#1E293B] border-[#334155] text-white hover:border-[#10B981] hover:shadow-lg'
+                                  : isCorrect
+                                  ? 'bg-[#10B981]/20 border-[#10B981] text-[#10B981]'
+                                  : quizAnswer === choice
+                                  ? 'bg-red-500/20 border-red-500 text-red-500'
+                                  : 'bg-[#1E293B] border-[#334155] text-white/30 opacity-50'
+                              }`}
+                            >
+                              {choice}
+                            </button>
+                          )
+                        })}
                       </div>
+                      {quizAnswer && (
+                        <div className={`text-sm font-bold uppercase tracking-widest animate-fade-in ${quizAnswer === (quizType === 'transliteration' ? wordData?.transliteration : wordData?.meaning) ? 'text-[#10B981]' : 'text-red-500'}`}>
+                          {quizAnswer === (quizType === 'transliteration' ? wordData?.transliteration : wordData?.meaning) ? '✨ JAWABAN TEPAT!' : '❌ KURANG TEPAT'}
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

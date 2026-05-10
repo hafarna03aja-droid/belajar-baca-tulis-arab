@@ -16,7 +16,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   
-  const { userName, setUserId, setUserName } = useLearningStore()
+  const { userName, setUserId, setUserName, theme, toggleTheme } = useLearningStore()
   const router = useRouter()
 
   useEffect(() => {
@@ -63,6 +63,18 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="w-px h-4 bg-[#334155] mx-2" />
+          
+          {/* Theme Toggle Desktop */}
+          <button
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-lg hover:bg-white/10 transition-colors"
+            title="Ganti Tema"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+          
+          <div className="w-px h-4 bg-[#334155] mx-2" />
+          
           {userName ? (
             <div className="flex items-center gap-3 px-3">
               <span className="text-sm font-bold text-white">Halo, {userName.split(' ')[0]}</span>
@@ -80,18 +92,27 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-1.5 sm:p-2 rounded-full bg-[#1E293B]/50 border border-[#334155] hover:bg-[#1E293B] transition-colors flex-shrink-0"
-          aria-label="Toggle menu"
-        >
-          <div className="w-4 h-3 sm:w-5 sm:h-4 flex flex-col justify-between relative">
-            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? 'rotate-45 translate-y-[-0.5px] sm:translate-y-[-1px]' : ''}`} />
-            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? '-rotate-45 translate-y-[0.5px] sm:translate-y-[1px]' : ''}`} />
-          </div>
-        </button>
+        {/* Mobile menu button & Theme Toggle */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-lg bg-[#1E293B]/50 border border-[#334155] hover:bg-[#1E293B] transition-colors"
+          >
+            {theme === 'dark' ? '☀️' : '🌙'}
+          </button>
+          
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-1.5 sm:p-2 rounded-full bg-[#1E293B]/50 border border-[#334155] hover:bg-[#1E293B] transition-colors flex-shrink-0"
+            aria-label="Toggle menu"
+          >
+            <div className="w-4 h-3 sm:w-5 sm:h-4 flex flex-col justify-between relative">
+              <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? 'rotate-45 translate-y-[-0.5px] sm:translate-y-[-1px]' : ''}`} />
+              <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-[1.5px] sm:h-[2px] w-full bg-white rounded-full transition-all duration-300 origin-left ${menuOpen ? '-rotate-45 translate-y-[0.5px] sm:translate-y-[1px]' : ''}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
       {menuOpen && (

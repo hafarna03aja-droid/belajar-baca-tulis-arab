@@ -421,9 +421,9 @@ export const CURRICULUM_LEVELS = [
     icon: '🧩', totalLessons: 28, color: '#F59E0B', path: 'forms'
   },
   {
-    id: 4, phase: 'reading', title: 'Membaca Lanjut',
-    description: 'Menguasai huruf dengan tanda mati (Sukun) dan vokal ganda (Tanwin).',
-    icon: '🌊', totalLessons: 28, color: '#D97706', path: 'reading'
+    id: 4, phase: 'mad', title: 'Hukum Mad',
+    description: 'Pahami bacaan Mad: panjang vokal 2-6 harakat. Termasuk Mad Ashli (Alif, Waw, Ya) dan Mad Far\'i (Hamzah).',
+    icon: '🌊', totalLessons: 32, color: '#D97706', path: 'mad'
   },
   {
     id: 5, phase: 'reading-words', title: 'Membaca Kata',

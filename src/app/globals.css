@@ -1,33 +1,67 @@
-@import "tailwindcss";
+:root {
+  /* Common */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-arabic: 'Amiri', serif;
+  
+  /* Gold Palette (Persistent) */
+  --color-primary: #F59E0B;
+  --color-primary-light: #FCD34D;
+  --color-primary-dark: #B45309;
+  --color-accent: #D97706;
+  
+  /* Light Mode Defaults */
+  --background: #F8FAFC;
+  --foreground: #020617;
+  --color-bg: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F1F5F9;
+  --color-text: #0F172A;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+  --color-success: #10B981;
+  --color-locked: #CBD5E1;
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --bento-bg: #FFFFFF;
+  --bento-border: rgba(226, 232, 240, 0.8);
+}
 
-@theme {
-  /* Ultra-Premium Gold Palette */
-  --color-primary: #F59E0B; /* Gold */
-  --color-primary-light: #FCD34D; 
-  --color-primary-dark: #B45309; /* Deep Gold */
-  
-  --color-accent: #D97706; /* Amber Gold */
-  --color-accent-light: #FCD34D;
-  --color-accent-dark: #B45309;
-  
-  --color-bg: #020617; /* Deepest Black */
-  --color-surface: #0B0E14; /* Very Dark Grey */
+[data-theme='dark'] {
+  --background: #020617;
+  --foreground: #F8FAFC;
+  --color-bg: #020617;
+  --color-surface: #0B0E14;
   --color-surface-2: #111827;
-  
   --color-text: #F8FAFC;
   --color-muted: #94A3B8;
   --color-border: #374151;
-  
   --color-success: #10B981;
   --color-locked: #374151;
   
-  --font-sans: 'Plus Jakarta Sans', sans-serif;
-  --font-arabic: 'Amiri', serif;
+  --glass-bg: rgba(11, 17, 32, 0.65);
+  --bento-bg: #0F172A;
+  --bento-border: rgba(51, 65, 85, 0.6);
 }
 
-:root {
-  --background: #020617;
-  --foreground: #F8FAFC;
+@theme {
+  --color-primary: var(--color-primary);
+  --color-primary-light: var(--color-primary-light);
+  --color-primary-dark: var(--color-primary-dark);
+  --color-accent: var(--color-accent);
+  
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-border: var(--color-border);
+  
+  --color-success: var(--color-success);
+  --color-locked: var(--color-locked);
+  
+  --font-sans: var(--font-sans);
+  --font-arabic: var(--font-arabic);
 }
 
 * {

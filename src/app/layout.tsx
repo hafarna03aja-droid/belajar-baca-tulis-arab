@@ -28,6 +28,8 @@ export const metadata: Metadata = {
   },
 };
 
+import ThemeProvider from "@/components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,7 +38,9 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning className={`${plusJakartaSans.variable} ${amiri.variable}`}>
       <body>
-        <SupabaseProvider>{children}</SupabaseProvider>
+        <SupabaseProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </SupabaseProvider>
       </body>
     </html>
   );

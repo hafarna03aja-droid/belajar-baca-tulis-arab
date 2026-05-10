@@ -25,7 +25,13 @@ export default function LearnPage() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const picks: Record<number, any> = {}
       CURRICULUM_LEVELS.forEach(level => {
-        const dataset = level.id >= 5 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
+        let dataset = level.id >= 4 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
+        
+        // Filter khusus untuk Level 4 (Mad)
+        if (level.id === 4) {
+          dataset = HIJAIYAH_WORDS.filter(w => w.category === 'Mad Ashli' || w.category === 'Mad Far\'i')
+        }
+        
         picks[level.id] = dataset[Math.floor(Math.random() * dataset.length)]
       })
       setRandomPicks(picks)
@@ -68,7 +74,12 @@ export default function LearnPage() {
               const isActive = currentLevel === level.id
               const isLocked = currentLevel < level.id
 
-              const dataset = level.id >= 5 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
+              let dataset = level.id >= 4 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
+              
+              if (level.id === 4) {
+                dataset = HIJAIYAH_WORDS.filter(w => w.category === 'Mad Ashli' || w.category === 'Mad Far\'i')
+              }
+
               const completedCountForLevel = Object.keys(completedLessons).filter(k => k.startsWith(`${level.id}-`) && completedLessons[k].completed).length
               const uncompletedLesson = dataset.find(l => !completedLessons[`${level.id}-${l.id}`]?.completed) || dataset[0]
 
