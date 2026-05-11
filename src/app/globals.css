@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Common */
   --font-sans: 'Plus Jakarta Sans', sans-serif;
@@ -41,27 +43,6 @@
   --glass-bg: rgba(11, 17, 32, 0.65);
   --bento-bg: #0F172A;
   --bento-border: rgba(51, 65, 85, 0.6);
-}
-
-@theme {
-  --color-primary: var(--color-primary);
-  --color-primary-light: var(--color-primary-light);
-  --color-primary-dark: var(--color-primary-dark);
-  --color-accent: var(--color-accent);
-  
-  --color-bg: var(--color-bg);
-  --color-surface: var(--color-surface);
-  --color-surface-2: var(--color-surface-2);
-  
-  --color-text: var(--color-text);
-  --color-muted: var(--color-muted);
-  --color-border: var(--color-border);
-  
-  --color-success: var(--color-success);
-  --color-locked: var(--color-locked);
-  
-  --font-sans: var(--font-sans);
-  --font-arabic: var(--font-arabic);
 }
 
 * {
