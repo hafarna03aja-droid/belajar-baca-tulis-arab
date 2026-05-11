@@ -57,6 +57,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              prefetch={false}
               className="px-5 py-2 text-sm font-semibold text-[#94A3B8] hover:text-[#3B82F6] hover:bg-[#3B82F6]/10 transition-colors rounded-full"
             >
               {link.label}
@@ -85,6 +86,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/auth/login"
+              prefetch={false}
               className="btn-primary px-6 py-2.5 text-sm"
             >
               Masuk
@@ -124,6 +126,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
+              prefetch={false}
               className="px-4 py-3.5 text-sm font-semibold text-white/90 hover:text-white hover:bg-white/5 active:bg-white/10 rounded-2xl transition-all flex items-center justify-between group"
               onClick={() => setMenuOpen(false)}
             >
@@ -152,6 +155,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/auth/login"
+              prefetch={false}
               className="btn-primary w-full px-4 py-3.5 text-sm text-center mt-1.5 rounded-xl font-bold shadow-lg shadow-[#3B82F6]/20"
               onClick={() => setMenuOpen(false)}
             >

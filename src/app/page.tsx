@@ -104,12 +104,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
             <Link
               href="/auth/login"
+              prefetch={false}
               className="w-full sm:w-auto px-8 py-4 sm:px-10 sm:py-4.5 rounded-full bg-[#F59E0B] text-[#020617] font-bold text-base sm:text-lg hover:scale-105 transition-transform duration-300 shadow-[0_0_40px_rgba(245,158,11,0.3)] flex items-center justify-center"
             >
               Mulai Gratis
             </Link>
             <Link
               href="/learn/reading/ba"
+              prefetch={false}
               className="w-full sm:w-auto px-8 py-4 sm:px-10 sm:py-4.5 rounded-full border border-white/20 text-white font-bold text-base sm:text-lg hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center gap-2"
             >
               <span>▶</span> Lihat Demo Interaktif
@@ -187,7 +189,7 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <Link href="/learn" className="btn-primary inline-flex mt-10 sm:mt-12 px-6 py-3.5 sm:px-8 sm:py-4 items-center justify-center gap-2 text-base sm:text-lg w-full sm:w-auto">
+              <Link href="/learn" prefetch={false} className="btn-primary inline-flex mt-10 sm:mt-12 px-6 py-3.5 sm:px-8 sm:py-4 items-center justify-center gap-2 text-base sm:text-lg w-full sm:w-auto">
                 Lihat Roadmap Penuh →
               </Link>
             </div>
@@ -221,6 +223,7 @@ export default function HomePage() {
               </p>
               <Link
                 href="/auth/login"
+                prefetch={false}
                 className="inline-flex justify-center items-center gap-2 bg-[#F59E0B] hover:bg-[#D97706] text-[#020617] font-bold px-8 py-4 sm:px-10 sm:py-5 rounded-full transition-all shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:scale-105 text-base sm:text-lg w-full sm:w-auto"
               >
                 Mulai Belajar Sekarang
@@ -243,8 +246,8 @@ export default function HomePage() {
             © {new Date().getFullYear()}{" "}Dibuat oleh 24 Learning Centre untuk kemudahan membaca Qur&apos;an.
           </div>
           <div className="flex gap-4 text-xs text-[#94A3B8]">
-            <Link href="/terms" className="hover:text-[#F59E0B] transition-colors">Syarat &amp; Ketentuan</Link>
-            <Link href="/validation" className="hover:text-[#F59E0B] transition-colors">Validasi Ustadz</Link>
+            <Link href="/terms" prefetch={false} className="hover:text-[#F59E0B] transition-colors">Syarat &amp; Ketentuan</Link>
+            <Link href="/validation" prefetch={false} className="hover:text-[#F59E0B] transition-colors">Validasi Ustadz</Link>
           </div>
         </div>
       </footer>
