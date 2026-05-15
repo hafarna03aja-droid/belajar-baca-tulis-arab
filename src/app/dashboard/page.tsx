@@ -21,8 +21,14 @@ const CERTIFICATE_LEVELS = [
 ]
 
 export default function DashboardPage() {
-  const { streakDays, totalXP, completedLessons, currentLevel, userName, isSyncing, lastSynced } = useLearningStore()
+  const { streakDays, totalXP, completedLessons, currentLevel, userName, isSyncing, lastSynced, resetProgress } = useLearningStore()
   const [activeCert, setActiveCert] = useState<typeof CERTIFICATE_LEVELS[0] | null>(null)
+
+  const handleReset = () => {
+    if (window.confirm('PERINGATAN: Anda yakin ingin mengulang semua progress dari Level 1? Semua pencapaian dan sertifikat akan dihapus. Tindakan ini tidak dapat dibatalkan.')) {
+      resetProgress()
+    }
+  }
 
   const completedCount = Object.values(completedLessons).filter((l) => l.completed).length
   const totalLessons = HIJAIYAH_LETTERS.length
@@ -71,6 +77,12 @@ export default function DashboardPage() {
                 Data Terakhir Disimpan: {new Date(lastSynced).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             )}
+            <button 
+              onClick={handleReset}
+              className="mt-2 text-[10px] font-bold text-red-500/80 hover:text-red-500 hover:bg-red-500/10 px-3 py-1.5 rounded-full transition-all"
+            >
+              Ulangi Progress (Reset)
+            </button>
           </div>
         </div>
 

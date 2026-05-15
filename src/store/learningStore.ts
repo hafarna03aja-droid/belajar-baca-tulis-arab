@@ -37,6 +37,7 @@ interface LearningStore {
   isLessonCompleted: (lessonId: string) => boolean
   getLevelProgress: (levelId: number, totalLessons: number) => number
   forceUnlockAll: () => void
+  resetProgress: () => void
   setUserId: (id: string | null) => void
   setUserName: (name: string | null) => void
   syncWithSupabase: () => Promise<void>
@@ -114,6 +115,32 @@ export const useLearningStore = create<LearningStore>()(
           }).then(({ error }) => {
             set({ isSyncing: false, lastSynced: error ? state.lastSynced : new Date().toISOString() })
             if (error) console.error('Error syncing to Supabase:', error)
+          })
+        }
+      },
+
+      resetProgress: () => {
+        set({
+          currentLevel: 1,
+          completedLessons: {},
+          totalXP: 0,
+          streakDays: 0,
+          sessionAccuracy: [],
+          lastActivity: null
+        })
+        const state = get()
+        if (state.userId) {
+          set({ isSyncing: true })
+          const supabase = createClient()
+          supabase.from('profiles').update({
+            completed_lessons: {},
+            total_xp: 0,
+            current_jilid: 1,
+            streak_days: 0,
+            updated_at: new Date().toISOString()
+          }).eq('id', state.userId).then(({ error }) => {
+            set({ isSyncing: false, lastSynced: error ? state.lastSynced : new Date().toISOString() })
+            if (error) console.error('Error resetting Supabase:', error)
           })
         }
       },
