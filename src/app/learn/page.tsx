@@ -7,6 +7,8 @@ import { HIJAIYAH_WORDS } from '@/lib/words-data'
 import { useLearningStore } from '@/store/learningStore'
 import Navbar from '@/components/Navbar'
 import { isDevMode } from '@/lib/useDevMode'
+import { useSubscription } from '@/lib/useSubscription'
+import UpgradeModal from '@/components/UpgradeModal'
 
 // Paths yang langsung ke halaman tanpa slug dinamis
 const STATIC_PATHS = ['reading-grid', 'iqro']
@@ -18,6 +20,10 @@ function getLevelHref(path: string, lessonId: string, levelId: number) {
 
 export default function LearnPage() {
   const { completedLessons, currentLevel, forceUnlockAll } = useLearningStore()
+  const { isPremium, isLoading: isPremiumLoading } = useSubscription()
+  const [upgradeModal, setUpgradeModal] = useState<{ open: boolean; levelId?: number }>({
+    open: false,
+  })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [randomPicks, setRandomPicks] = useState<Record<number, any>>({})
 
@@ -76,6 +82,8 @@ export default function LearnPage() {
               const isCompleted = currentLevel > level.id
               const isActive = currentLevel === level.id
               const isLocked = currentLevel < level.id
+              // Level 2+ butuh Premium (kecuali sudah premium atau dev mode)
+              const isLockedByPremium = level.id > 1 && !isPremium && !isPremiumLoading && !isDevMode()
 
               let dataset = level.id >= 4 ? HIJAIYAH_WORDS : HIJAIYAH_LETTERS
               
@@ -105,10 +113,13 @@ export default function LearnPage() {
                   <div
                     className={`glass-premium p-5 md:p-8 transition-all rounded-2xl md:rounded-3xl border shadow-3d ${isLocked
                         ? 'opacity-40 grayscale pointer-events-none'
-                        : isActive
-                          ? 'border-[#F59E0B]/50 glow-gold scale-[1.02]'
-                          : 'border-white/5 opacity-90'
+                        : isLockedByPremium
+                          ? 'border-[#F59E0B]/20 opacity-80 cursor-pointer'
+                          : isActive
+                            ? 'border-[#F59E0B]/50 glow-gold scale-[1.02]'
+                            : 'border-white/5 opacity-90'
                       }`}
+                    onClick={isLockedByPremium ? () => setUpgradeModal({ open: true, levelId: level.id }) : undefined}
                   >
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
                       <div className="flex items-start gap-3 md:gap-5 flex-1 w-full">
@@ -124,13 +135,24 @@ export default function LearnPage() {
                               Level {level.id}
                             </span>
                             <span
-                              className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${level.phase === 'writing'
+                              className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${
+                                level.phase === 'writing'
                                   ? 'bg-[#F59E0B]/10 text-[#F59E0B]'
                                   : 'bg-[#374151] text-white/40'
-                                }`}
+                              }`}
                             >
                               {level.phase === 'writing' ? '✍️ Menulis' : '📖 Membaca'}
                             </span>
+                            {/* Premium badge */}
+                            {level.id > 1 && (
+                              <span className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${
+                                isPremium
+                                  ? 'bg-[#10B981]/10 text-[#10B981]'
+                                  : 'bg-[#F59E0B]/10 text-[#F59E0B]'
+                              }`}>
+                                {isPremium ? '✓ PREMIUM' : '👑 PREMIUM'}
+                              </span>
+                            )}
                           </div>
                           <h3 className={`text-2xl font-extrabold tracking-tight mb-1 ${isLocked ? 'text-[#64748B]' : 'text-white'}`}>
                             {level.title}
@@ -142,7 +164,7 @@ export default function LearnPage() {
                       </div>
 
                       {/* Action buttons */}
-                      {!isLocked && (
+                      {!isLocked && !isLockedByPremium && (
                         <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
                           <Link
                             href={getLevelHref(level.path, uncompletedLesson.id, level.id)}
@@ -171,6 +193,16 @@ export default function LearnPage() {
                             })()}
                           </button>
                         </div>
+                      )}
+
+                      {/* Premium lock CTA */}
+                      {!isLocked && isLockedByPremium && (
+                        <button
+                          onClick={() => setUpgradeModal({ open: true, levelId: level.id })}
+                          className="flex-shrink-0 flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-bold border border-[#F59E0B]/30 text-[#F59E0B] hover:bg-[#F59E0B]/10 transition-all"
+                        >
+                          <span className="text-base">👑</span> Buka Premium
+                        </button>
                       )}
                     </div>
 
@@ -245,6 +277,13 @@ export default function LearnPage() {
 
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        isOpen={upgradeModal.open}
+        onClose={() => setUpgradeModal({ open: false })}
+        levelId={upgradeModal.levelId}
+      />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -15,6 +15,19 @@ export default function LoginPage() {
   const [success, setSuccess] = useState('')
   const router = useRouter()
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const supabase = createClient()
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) {
+        const params = new URLSearchParams(window.location.search)
+        const redirectTo = params.get('redirect') || '/dashboard'
+        router.push(redirectTo)
+      }
+    }
+    checkUser()
+  }, [router])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -22,20 +35,34 @@ export default function LoginPage() {
     setSuccess('')
 
     const supabase = createClient()
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+    const redirectTo = params?.get('redirect') || '/dashboard'
 
     try {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        router.push('/dashboard')
+        router.push(redirectTo)
       } else {
-        const { error } = await supabase.auth.signUp({
+        const emailRedirectTo = typeof window !== 'undefined'
+          ? `${window.location.origin}/auth/login?redirect=${encodeURIComponent(redirectTo)}`
+          : undefined
+
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { name } },
+          options: { 
+            data: { name },
+            emailRedirectTo
+          },
         })
         if (error) throw error
-        setSuccess('Akun berhasil dibuat! Cek emailmu untuk verifikasi, lalu login.')
+
+        if (data?.session) {
+          router.push(redirectTo)
+        } else {
+          setSuccess('Akun berhasil dibuat! Cek emailmu untuk verifikasi, lalu login.')
+        }
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Terjadi kesalahan'
@@ -46,7 +73,9 @@ export default function LoginPage() {
   }
 
   const handleDemoLogin = () => {
-    router.push('/dashboard')
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+    const redirectTo = params?.get('redirect') || '/dashboard'
+    router.push(redirectTo)
   }
 
   return (
