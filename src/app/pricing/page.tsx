@@ -72,7 +72,7 @@ const PLANS = [
       '✅ Badge eksklusif "Huffaz"',
       '✅ Prioritas fitur baru',
       '✅ Hemat Rp 149.000/tahun',
-      '✅ Sertifikat premium emas',
+      '✅ Sertifikat atas nama pribadi',
     ],
     cta: 'Pilih Tahunan',
     ctaHref: null,
