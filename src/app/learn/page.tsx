@@ -62,14 +62,12 @@ export default function LearnPage() {
           <p className="text-lg text-[#CBD5E1] max-w-xl mx-auto font-medium mb-6">
             Kurikulum linear yang terstruktur rapi. Taklukkan setiap pos penjagaan untuk membuka rute selanjutnya.
           </p>
-          {isDevMode() && (
-            <button
-              onClick={() => forceUnlockAll()}
-              className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] bg-[#D97706]/10 px-4 py-2 rounded-full hover:bg-[#D97706]/20 transition-colors border border-[#D97706]/20"
-            >
-              🔓 Aktifkan Semua Fitur (Dev Mode)
-            </button>
-          )}
+          <button
+            onClick={() => forceUnlockAll()}
+            className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] bg-[#D97706]/10 px-4 py-2 rounded-full hover:bg-[#D97706]/20 transition-colors border border-[#D97706]/20 mt-4"
+          >
+            🔓 Buka Semua Level (Uji Coba)
+          </button>
         </div>
 
         {/* Roadmap */}
