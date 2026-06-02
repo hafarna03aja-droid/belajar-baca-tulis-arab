@@ -31,8 +31,8 @@ export default function DashboardPage() {
   }
 
   const completedCount = Object.values(completedLessons).filter((l) => l.completed).length
-  const totalLessons = HIJAIYAH_LETTERS.length
-  const overallProgress = Math.floor((completedCount / totalLessons) * 100)
+  const totalLessons = CURRICULUM_LEVELS.reduce((acc, lvl) => acc + lvl.totalLessons, 0)
+  const overallProgress = Math.min(100, Math.floor((completedCount / totalLessons) * 100))
 
   const today = new Date()
   const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab']
@@ -170,7 +170,10 @@ export default function DashboardPage() {
                <h2 className="text-lg sm:text-xl font-bold text-white mb-5 sm:mb-6 tracking-tight">Capaian Tahapan</h2>
                <div className="flex flex-col gap-4 sm:gap-6">
                 {CURRICULUM_LEVELS.map((level) => {
-                  const progress = level.id < currentLevel ? 100 : level.id === currentLevel ? Math.floor((completedCount / level.totalLessons) * 100) : 0
+                  const completedCountForLevel = Object.keys(completedLessons).filter(
+                    (k) => k.startsWith(`${level.id}-`) && completedLessons[k].completed
+                  ).length
+                  const progress = Math.min(100, Math.floor((completedCountForLevel / level.totalLessons) * 100))
                   const isLocked = level.id > currentLevel
                   return (
                     <div key={level.id} className={`flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl sm:rounded-3xl transition-all ${isLocked ? 'bg-[#F8FAF9] opacity-70' : 'bg-white border border-[#E2E8F0] shadow-sm'}`}>
