@@ -30,6 +30,7 @@ export const metadata: Metadata = {
 };
 
 import ThemeProvider from "@/components/ThemeProvider";
+import WelcomePopup from "@/components/WelcomePopup";
 
 export default function RootLayout({
   children,
@@ -40,7 +41,10 @@ export default function RootLayout({
     <html lang="id" suppressHydrationWarning className={`${plusJakartaSans.variable} ${amiri.variable}`}>
       <body>
         <SupabaseProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <WelcomePopup />
+            {children}
+          </ThemeProvider>
         </SupabaseProvider>
         <Script
           src={
