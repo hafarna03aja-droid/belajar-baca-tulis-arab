@@ -157,9 +157,15 @@ function drawCertificate(
   ctx.fillText(`LEVEL ${levelId}`, W / 2 - 115, 476)
 
   // Level title
-  ctx.font = 'bold 26px sans-serif'
+  let titleFontSize = 26
+  ctx.font = `bold ${titleFontSize}px sans-serif`
   ctx.fillStyle = '#FFFFFF'
   ctx.letterSpacing = '0'
+  const maxTitleWidth = 330
+  while (ctx.measureText(levelTitle).width > maxTitleWidth && titleFontSize > 14) {
+    titleFontSize -= 1
+    ctx.font = `bold ${titleFontSize}px sans-serif`
+  }
   ctx.fillText(levelTitle, W / 2 - 115, 510)
 
   // XP gained

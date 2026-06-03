@@ -12,7 +12,7 @@ const CertificateModal = dynamic(() => import('@/components/CertificateModal'), 
 
 // Level mana saja yang memberikan sertifikat
 const CERTIFICATE_LEVELS = [
-  { levelId: 1, minCompleted: 3, title: 'Pondasi: Huruf Tunggal',    icon: '✍️', color: 'from-blue-500/20 to-cyan-500/20',    border: 'border-blue-500/30' },
+  { levelId: 1, minCompleted: 3, title: 'Pondasi Huruf Tunggal',    icon: '✍️', color: 'from-blue-500/20 to-cyan-500/20',    border: 'border-blue-500/30' },
   { levelId: 2, minCompleted: 3, title: 'Harakat Dasar',              icon: '🗣️', color: 'from-sky-500/20 to-blue-400/20',    border: 'border-sky-500/30' },
   { levelId: 3, minCompleted: 3, title: 'Transformasi Bentuk',        icon: '🧩', color: 'from-amber-500/20 to-yellow-400/20', border: 'border-amber-500/30' },
   { levelId: 4, minCompleted: 3, title: 'Membaca Lanjut',             icon: '🌊', color: 'from-teal-500/20 to-emerald-500/20', border: 'border-teal-500/30' },

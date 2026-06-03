@@ -406,7 +406,7 @@ export const HARAKATS = [
 
 export const CURRICULUM_LEVELS = [
   {
-    id: 1, phase: 'writing', title: 'Pondasi: Huruf Tunggal',
+    id: 1, phase: 'writing', title: 'Pondasi Huruf Tunggal',
     description: 'Kenali dan gambar 28 huruf dasar Hijaiyah satu per satu.',
     icon: '✍️', totalLessons: 28, color: '#2563EB', path: 'writing'
   },
