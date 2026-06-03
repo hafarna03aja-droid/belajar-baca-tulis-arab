@@ -160,7 +160,7 @@ export default function ReadingClient({
         <div className="flex items-center gap-1.5 md:gap-2 text-[11px] md:text-[13px] font-bold tracking-wider uppercase text-[#CBD5E1] mb-6 md:mb-8 flex-wrap">
           <Link href="/learn" className="hover:text-[#3B82F6] transition-colors whitespace-nowrap">Peta Rute</Link>
           <span>›</span>
-          <span className="text-[#3B82F6] truncate">Sesi Baca: {letter?.name || '...'}</span>
+          <span className="text-[#3B82F6] truncate">Sesi Membaca: {letter?.name || '...'}</span>
         </div>
 
         {/* Mode toggle */}

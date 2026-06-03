@@ -154,7 +154,7 @@ function drawCertificate(
   ctx.fillStyle = '#F59E0B'
   ctx.letterSpacing = '4px'
   ctx.textAlign = 'left'
-  ctx.fillText(`LEVEL ${levelId}`, W / 2 - 115, 476)
+  ctx.fillText(`TAHAP ${levelId}`, W / 2 - 115, 476)
 
   // Level title
   let titleFontSize = 26
@@ -172,7 +172,7 @@ function drawCertificate(
   ctx.font = 'bold 12px sans-serif'
   ctx.fillStyle = 'rgba(245,158,11,0.7)'
   ctx.letterSpacing = '2px'
-  ctx.fillText(`${xp} XP DIPEROLEH`, W / 2 - 115, 535)
+  ctx.fillText(`${xp} POIN DIPEROLEH`, W / 2 - 115, 535)
 
   ctx.textAlign = 'center'
 
@@ -337,7 +337,7 @@ export default function CertificateModal({
               🎓 Sertifikat Digital
             </h2>
             <p className="text-[11px] text-[#64748B] font-medium mt-1">
-              Level {levelId}: {levelTitle}
+              Tahap {levelId}: {levelTitle}
             </p>
           </div>
           <button

@@ -239,7 +239,7 @@ export default function WritingWordsClient({
         <div className="flex items-center gap-2 text-[13px] font-bold tracking-wider uppercase text-[#CBD5E1] mb-8">
           <Link href="/learn" className="hover:text-[#10B981] transition-colors">Peta Rute</Link>
           <span>›</span>
-          <span className="text-[#10B981]">Sesi Tulis: {wordData?.transliteration || '...'}</span>
+          <span className="text-[#10B981]">Sesi Menulis: {wordData?.transliteration || '...'}</span>
         </div>
         <div className="grid lg:grid-cols-5 gap-8">
           <div className="lg:col-span-2 flex flex-col gap-6 animate-fade-in">
@@ -271,7 +271,7 @@ export default function WritingWordsClient({
             <div className="bg-[#0F172A] rounded-[2rem] border border-[#334155] overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)]">
               <div className="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-b border-[#334155] bg-[#0B1120] gap-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-[13px] font-extrabold uppercase tracking-widest text-white">Kanvas Kata</span>
+                  <span className="text-[13px] font-extrabold uppercase tracking-widest text-white">Papan Tulis Kata</span>
                   <div className="w-px h-4 bg-[#334155] mx-1" />
                   <label className="flex items-center gap-2 cursor-pointer group">
                     <div className={`w-9 h-5 rounded-full transition-colors relative ${showGuide ? 'bg-[#10B981]' : 'bg-[#334155]'}`} onClick={() => setShowGuide(!showGuide)}>

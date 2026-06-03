@@ -66,7 +66,7 @@ export default function LearnPage() {
             onClick={() => forceUnlockAll()}
             className="text-[11px] font-extrabold uppercase tracking-widest text-[#D97706] bg-[#D97706]/10 px-4 py-2 rounded-full hover:bg-[#D97706]/20 transition-colors border border-[#D97706]/20 mt-4"
           >
-            🔓 Buka Semua Level (Uji Coba)
+            🔓 Buka Semua Tahapan (Uji Coba)
           </button>
         </div>
 
@@ -130,7 +130,7 @@ export default function LearnPage() {
                         <div className="flex-1">
                           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-1.5">
                             <span className="text-[10px] md:text-[11px] font-bold tracking-widest text-[#D97706] uppercase">
-                              Level {level.id}
+                              Tahap {level.id}
                             </span>
                             <span
                               className={`text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${

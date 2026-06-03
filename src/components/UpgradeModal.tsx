@@ -58,10 +58,10 @@ export default function UpgradeModal({ isOpen, onClose, levelId }: UpgradeModalP
           </h3>
           <p className="text-[#CBD5E1] leading-relaxed">
             {levelId
-              ? `Level ${levelId} memerlukan akses Premium.`
+              ? `Tahap ${levelId} memerlukan akses Premium.`
               : 'Konten ini memerlukan akses Premium.'
             }
-            {' '}Unlock semua 6 level kurikulum mulai dari
+            {' '}Buka semua 6 tahap belajar mulai dari
             <span className="text-[#F59E0B] font-bold"> Rp 29.000/bulan</span>.
           </p>
         </div>
@@ -69,9 +69,9 @@ export default function UpgradeModal({ isOpen, onClose, levelId }: UpgradeModalP
         {/* Feature highlights */}
         <div className="grid grid-cols-2 gap-3 mb-8">
           {[
-            { icon: '📖', text: 'Level 2–6 Penuh' },
+            { icon: '📖', text: 'Tahap 2–6 Lengkap' },
             { icon: '🎧', text: 'Audio Makhraj' },
-            { icon: '✍️', text: 'Tracing AI Kata' },
+            { icon: '✍️', text: 'Papan Tulis Kata' },
             { icon: '🏆', text: 'Sertifikat Digital' },
           ].map((f, i) => (
             <div key={i} className="flex items-center gap-2 p-3 rounded-xl bg-white/5 border border-white/5">
@@ -94,7 +94,7 @@ export default function UpgradeModal({ isOpen, onClose, levelId }: UpgradeModalP
             onClick={onClose}
             className="w-full py-3 text-sm text-[#64748B] hover:text-[#94A3B8] transition-colors font-medium"
           >
-            Lanjutkan gratis (Level 1 saja)
+            Lanjutkan gratis (Tahap 1 saja)
           </button>
         </div>
       </div>

@@ -93,7 +93,7 @@ export default function DashboardPage() {
             { label: 'Konsistensi', value: streakDays, unit: 'hari', icon: '🔥', color: '#FDE68A', glow: 'glow-gold' },
             { label: 'Total XP', value: totalXP, unit: 'poin', icon: '✨', color: '#F59E0B', glow: 'glow-gold' },
             { label: 'Pelajaran', value: completedCount, unit: `/ ${totalLessons}`, icon: '🎯', color: '#D97706', glow: 'glow-gold' },
-            { label: 'Level Saya', value: currentLevel, unit: '/ 6 level', icon: '🎖️', color: '#B45309', glow: 'glow-gold' },
+            { label: 'Tahap Saya', value: currentLevel, unit: '/ 6 tahap', icon: '🎖️', color: '#B45309', glow: 'glow-gold' },
           ].map((stat) => (
             <div key={stat.label} className={`card-3d-glow glass-premium p-4 sm:p-6 flex flex-col justify-between rounded-2xl sm:rounded-3xl transition-all ${stat.glow}`}>
               <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{stat.icon}</div>
@@ -343,7 +343,7 @@ export default function DashboardPage() {
                     {!done && <div className="absolute top-2.5 right-2.5 text-sm text-[#334155]">🔒</div>}
                     <span className="text-3xl">{cert.icon}</span>
                     <div>
-                      <p className="text-[9px] font-extrabold uppercase tracking-widest text-[#F59E0B] mb-1">Level {cert.levelId}</p>
+                      <p className="text-[9px] font-extrabold uppercase tracking-widest text-[#F59E0B] mb-1">Tahap {cert.levelId}</p>
                       <p className={`text-[11px] font-bold leading-tight ${done ? 'text-white' : 'text-[#475569]'}`}>{cert.title}</p>
                     </div>
                     {done && (

@@ -104,7 +104,7 @@ export default function MadClient({
         <div className="flex items-center gap-2 text-[13px] font-bold tracking-wider uppercase text-[#CBD5E1] mb-8">
           <Link href="/learn" className="hover:text-[#D97706] transition-colors">Peta Rute</Link>
           <span>›</span>
-          <span className="text-[#D97706]">Level 4: Hukum Mad</span>
+          <span className="text-[#D97706]">Tahap 4: Hukum Mad</span>
         </div>
 
         {/* Mode Toggle */}
