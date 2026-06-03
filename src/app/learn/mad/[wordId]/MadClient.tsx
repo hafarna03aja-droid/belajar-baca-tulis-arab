@@ -272,12 +272,12 @@ export default function MadClient({
             <div className="flex gap-3 mt-auto">
               {prevWord ? (
                 <Link href={`/learn/mad/${prevWord.id}`} className="flex-1 py-5 text-xs font-black uppercase tracking-widest bg-[#1E293B] border border-[#334155] text-white rounded-2xl hover:border-[#D97706] transition-all text-center hover:shadow-xl">
-                  ← PREV
+                  ← KEMBALI
                 </Link>
               ) : <div className="flex-1" />}
               {nextWord ? (
                 <Link href={`/learn/mad/${nextWord.id}`} className="flex-1 py-5 text-xs font-black uppercase tracking-widest bg-[#D97706] text-white shadow-[0_10px_20px_rgba(217,119,6,0.3)] hover:scale-[1.03] rounded-2xl transition-all text-center">
-                  NEXT →
+                  LANJUT →
                 </Link>
               ) : (
                 <Link href="/learn" className="flex-1 py-5 text-xs font-black uppercase tracking-widest bg-[#10B981] text-white shadow-lg rounded-2xl text-center">

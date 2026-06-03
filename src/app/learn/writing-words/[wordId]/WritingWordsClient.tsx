@@ -277,7 +277,7 @@ export default function WritingWordsClient({
                     <div className={`w-9 h-5 rounded-full transition-colors relative ${showGuide ? 'bg-[#10B981]' : 'bg-[#334155]'}`} onClick={() => setShowGuide(!showGuide)}>
                       <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform ${showGuide ? 'translate-x-[18px]' : 'translate-x-0.5'}`} />
                     </div>
-                    <span className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider group-hover:text-white transition-colors">Ghost Guide</span>
+                    <span className="text-xs font-bold text-[#94A3B8] uppercase tracking-wider group-hover:text-white transition-colors">Panduan Garis</span>
                   </label>
                 </div>
                 <div className="flex items-center gap-3 bg-[#1E293B] px-3 py-1.5 rounded-full border border-[#334155]">
