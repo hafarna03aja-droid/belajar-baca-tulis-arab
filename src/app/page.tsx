@@ -9,26 +9,26 @@ const FLOATING_LETTERS = ['ا', 'ب', 'ت', 'ح', 'د', 'ر', 'س', 'ع', 'ف', 
 const FEATURES = [
   {
     icon: '✍️',
-    title: 'Kanvas Tracing Cerdas',
-    desc: 'Bukan sekadar menggambar. Algoritma akurasi kami membaca tarikan garis Anda secara real-time.',
+    title: 'Papan Tulis Menulis Cerdas',
+    desc: 'Belajar menulis huruf Hijaiyah secara langsung. Sistem pintar kami akan membantumu menulis dengan rapi dan benar.',
     span: 'md:col-span-2 lg:col-span-2'
   },
   {
     icon: '🏆',
-    title: 'Sistem Level',
-    desc: 'Kurikulum linier dari Alif hingga huruf tersambung.',
+    title: 'Tahapan Belajar Teratur',
+    desc: 'Belajar secara bertahap yang menyenangkan, mulai dari huruf tunggal hingga huruf bersambung.',
     span: 'md:col-span-1 lg:col-span-1'
   },
   {
     icon: '🎧',
-    title: 'Audio Native Makhraj',
-    desc: 'Akses instan ke pengucapan jernih untuk setiap variasi harakat.',
+    title: 'Suara Pelafalan Asli',
+    desc: 'Dengarkan pengucapan yang jernih dan benar dari ustadz untuk setiap bunyi tanda baca.',
     span: 'md:col-span-1 lg:col-span-1'
   },
   {
     icon: '📊',
-    title: 'Analitik Belajar Anda',
-    desc: 'Pantau streak, kumpulkan XP, dan raih target harian dengan dashboard visual elegan.',
+    title: 'Pantau Hasil Belajar',
+    desc: 'Lihat keaktifan belajarmu tiap hari, kumpulkan poin bintang, dan raih target belajar harianmu.',
     span: 'md:col-span-2 lg:col-span-2'
   },
 ]
@@ -83,7 +83,7 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2563EB] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3B82F6]"></span>
             </span>
-            <span className="text-xs sm:text-sm font-semibold text-white/90 tracking-wide">Platform Edukasi Hijaiyah #1</span>
+            <span className="text-xs sm:text-sm font-semibold text-white/90 tracking-wide">Aplikasi Belajar Hijaiyah Nomor 1</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white leading-[1.1] sm:leading-[1.1] mb-6 sm:mb-8 tracking-tight">
@@ -98,7 +98,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed font-medium px-2 sm:px-0">
-            Tinggalkan cara lama. Mulai perjalanan Anda dengan kanvas tracing interaktif eksklusif dan kurikulum yang didesain secara sains.
+            Cara seru belajar mengaji! Mulai perjalanan belajarmu dengan papan tulis interaktif dan tahapan belajar yang dirancang khusus agar mudah dipahami anak dan orang tua.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
@@ -114,7 +114,7 @@ export default function HomePage() {
               prefetch={false}
               className="w-full sm:w-auto px-8 py-4 sm:px-10 sm:py-4.5 rounded-full border border-white/20 text-white font-bold text-base sm:text-lg hover:bg-white/10 transition-colors backdrop-blur-md flex items-center justify-center gap-2"
             >
-              <span>▶</span> Lihat Demo Interaktif
+              <span>▶</span> Coba Belajar (Demo)
             </Link>
           </div>
         </div>
@@ -128,8 +128,8 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto glass-premium rounded-3xl p-6 sm:p-8 grid grid-cols-2 sm:flex sm:justify-around gap-6 sm:gap-6 items-center border border-white/10 glow-blue">
           {[
             { num: '28', label: 'Huruf Hijaiyah', color: '#FCD34D' },
-            { num: '6', label: 'Tingkatan Level', color: '#F59E0B' },
-            { num: '100%', label: 'Gratis Akses', color: '#B45309', extraClasses: 'col-span-2 sm:col-span-1' },
+            { num: '6', label: 'Tahapan Belajar', color: '#F59E0B' },
+            { num: '100%', label: '100% Gratis', color: '#B45309', extraClasses: 'col-span-2 sm:col-span-1' },
           ].map((stat) => (
             <div key={stat.label} className={`text-center group ${stat.extraClasses || ''}`}>
               <div className="text-3xl sm:text-4xl font-extrabold transition-transform group-hover:scale-110 duration-300" style={{ color: stat.color }}>{stat.num}</div>
@@ -143,8 +143,8 @@ export default function HomePage() {
       <section className="py-20 px-5 sm:px-6 md:py-32">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 sm:mb-5 tracking-tight leading-tight">Pengalaman Visual Tanpa Kompromi</h2>
-            <p className="text-[#94A3B8] text-base sm:text-lg max-w-xl mx-auto px-4 sm:px-0">Dirancang layaknya aplikasi standar dunia. Bersih, fokus, tanpa distraksi.</p>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 sm:mb-5 tracking-tight leading-tight">Tampilan Bersih & Bebas Iklan</h2>
+            <p className="text-[#94A3B8] text-base sm:text-lg max-w-xl mx-auto px-4 sm:px-0">Dirancang khusus untuk kenyamanan belajar anak dan orang tua. Bersih, fokus, dan bebas dari distraksi iklan mengganggu.</p>
           </div>
 
           {/* Bento Box Layout for Features */}
@@ -172,8 +172,8 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12 sm:gap-16 items-center">
             <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-5 sm:mb-6 leading-tight">Langkah Pasti,<br className="hidden sm:block" />Bukan Acak.</h2>
-              <p className="text-[#94A3B8] text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0">Kami tidak melempar semua informasi di hari pertama. Anda harus menaklukkan huruf tunggal sebelum menyentuh huruf bersambung.</p>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-5 sm:mb-6 leading-tight">Belajar Bertahap<br className="hidden sm:block" />& Teratur.</h2>
+              <p className="text-[#94A3B8] text-base sm:text-lg leading-relaxed mb-8 sm:mb-10 px-2 sm:px-0">Belajar mengaji jadi lebih mudah jika dilakukan satu per satu. Adik-adik akan belajar mengenal huruf tunggal terlebih dahulu sebelum belajar menyambung huruf.</p>
 
               <div className="flex flex-col gap-5 sm:gap-6 text-left">
                 {CURRICULUM.map((item, i) => (
@@ -190,7 +190,7 @@ export default function HomePage() {
               </div>
 
               <Link href="/learn" prefetch={false} className="btn-primary inline-flex mt-10 sm:mt-12 px-6 py-3.5 sm:px-8 sm:py-4 items-center justify-center gap-2 text-base sm:text-lg w-full sm:w-auto">
-                Lihat Roadmap Penuh →
+                Lihat Peta Belajar Lengkap →
               </Link>
             </div>
 
@@ -199,8 +199,8 @@ export default function HomePage() {
               <div className="bento-card p-8 sm:p-10 text-center relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 sm:p-6 text-7xl sm:text-8xl font-arabic opacity-5 text-[#3B82F6] -rotate-12">ص</div>
                 <div className="font-arabic text-8xl sm:text-9xl text-[#3B82F6] mb-6 sm:mb-8 relative z-10 leading-none py-4 sm:py-6">ب</div>
-                <div className="text-xs sm:text-sm font-bold tracking-widest text-[#3B82F6] mb-2 uppercase">Pratinjau Level 1</div>
-                <div className="text-xl sm:text-2xl font-bold text-white">Kanvas Menulis</div>
+                <div className="text-xs sm:text-sm font-bold tracking-widest text-[#3B82F6] mb-2 uppercase">Pratinjau Tahap 1</div>
+                <div className="text-xl sm:text-2xl font-bold text-white">Papan Tulis Digital</div>
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function HomePage() {
 
             <div className="relative z-10">
               <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 sm:mb-6 leading-tight">
-                Investasi 5 Menit / Hari.
+                Cukup 5 Menit Sehari.
               </h2>
               <p className="text-white/80 text-base sm:text-lg mb-8 sm:mb-12 max-w-xl mx-auto font-medium px-2 sm:px-0">
                 Masuk sekarang dan dapatkan akses penuh kelengkapan belajar kami secara gratis.
